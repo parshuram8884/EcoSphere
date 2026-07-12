@@ -11,13 +11,12 @@ export default function GamificationLayout() {
   const getTabClass = (path) => {
     return location.pathname === path ? 'layout-tab-link layout-tab-link-active' : 'layout-tab-link'
   }
-
   const user = {
     name: 'Marcus Thome',
-    role: 'Engagement Lead',
+    role: 'Sustainability Lead',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
-    goalPct: 68,
-    goalText: 'Engagement Rate'
+    goalPct: 78,
+    goalText: 'of Net Zero Target'
   }
 
   return (
