@@ -1,0 +1,278 @@
+/* Diversity Metrics styling sheet */
+.diversity-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Filter Toolbar */
+.diversity-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.diversity-filters-group {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.diversity-dropdown {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #334155;
+	outline: none;
+	cursor: pointer;
+}
+
+.diversity-toolbar-actions {
+	display: flex;
+	gap: 12px;
+}
+
+/* 2. Four Quadrants Chart Grid */
+.diversity-charts-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.diversity-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.diversity-card h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.diversity-card p {
+	font-size: 0.78rem;
+	color: #64748b;
+	margin: 2px 0 0 0;
+}
+
+/* Donut Chart Style */
+.diversity-donut-group {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 24px;
+	flex-wrap: wrap;
+}
+
+.diversity-donut-chart {
+	width: 130px;
+	height: 130px;
+	position: relative;
+}
+
+.diversity-donut-inner-text {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-weight: 800;
+	color: #0f172a;
+	font-size: 1.15rem;
+}
+
+.diversity-donut-inner-text span {
+	font-size: 0.68rem;
+	color: #64748b;
+}
+
+.diversity-donut-details {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+	min-width: 160px;
+}
+
+.diversity-donut-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #334155;
+}
+
+.diversity-legend-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.legend-dot-fem { width: 8px; height: 8px; border-radius: 50%; background: #10b981; }
+.legend-dot-male { width: 8px; height: 8px; border-radius: 50%; background: #064e3b; }
+.legend-dot-non { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; }
+
+/* Stacked bar graphs */
+.diversity-stacked-list {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.diversity-stacked-row {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.diversity-stacked-meta {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.diversity-stacked-bar {
+	height: 14px;
+	border-radius: 4px;
+	overflow: hidden;
+	display: flex;
+	background: #cbd5e1;
+}
+
+.diversity-stacked-fill-fem {
+	background: #10b981;
+	height: 100%;
+}
+
+.diversity-stacked-fill-male {
+	background: #064e3b;
+	height: 100%;
+}
+
+.diversity-stacked-fill-non {
+	background: #94a3b8;
+	height: 100%;
+}
+
+/* Histogram styling */
+.diversity-histogram-container {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	height: 140px;
+	padding-top: 10px;
+	border-bottom: 2px solid #cbd5e1;
+}
+
+.diversity-histogram-bar-group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+}
+
+.diversity-histogram-bar {
+	width: 32px;
+	border-radius: 4px 4px 0 0;
+	background: #047857;
+	position: relative;
+	transition: height 0.3s;
+	display: flex;
+	justify-content: center;
+}
+
+.diversity-histogram-value {
+	position: absolute;
+	top: -20px;
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.diversity-histogram-label {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #64748b;
+}
+
+/* 3. Summary Insights Panel */
+.diversity-insights-card {
+	background: #ecfdf5;
+	border: 1px solid #a7f3d0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.diversity-insights-icon {
+	font-size: 1.6rem;
+}
+
+.diversity-insights-text-block {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.diversity-insights-text-block strong {
+	font-size: 0.92rem;
+	color: #064e3b;
+	font-weight: 800;
+}
+
+.diversity-insights-text-block p {
+	font-size: 0.8rem;
+	color: #047857;
+	margin: 0;
+	line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+	.diversity-charts-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.diversity-toolbar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.diversity-filters-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.diversity-dropdown {
+		width: 100%;
+	}
+}

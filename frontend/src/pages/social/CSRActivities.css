@@ -1,0 +1,498 @@
+/* CSR Activities view styling */
+.csr-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Title Block and controls */
+.csr-title-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.csr-title-block h2 {
+	font-size: 1.5rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0 0 6px 0;
+}
+
+.csr-title-block p {
+	font-size: 0.85rem;
+	color: #64748b;
+	margin: 0;
+	line-height: 1.45;
+}
+
+.csr-actions-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.csr-view-toggle {
+	display: flex;
+	background: #f1f5f9;
+	border-radius: 8px;
+	padding: 2px;
+}
+
+.csr-toggle-btn {
+	background: transparent;
+	border: none;
+	border-radius: 6px;
+	padding: 6px 12px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #475569;
+	cursor: pointer;
+}
+
+.csr-toggle-btn-active {
+	background: #ffffff;
+	color: #0f172a;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.csr-btn-propose {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.csr-btn-propose:hover {
+	background: #065f46;
+}
+
+/* 2. Top Metric Cards */
+.csr-metrics-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.csr-metric-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.csr-metric-icon-box {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	font-size: 1.15rem;
+}
+
+.icon-bg-hours { background: #ecfdf5; color: #059669; }
+.icon-bg-participation { background: #f0fdf4; color: #15803d; }
+.icon-bg-capital { background: #f8fafc; color: #334155; }
+
+.csr-metric-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.csr-metric-label {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.csr-metric-val {
+	font-size: 1.4rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.csr-metric-delta {
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.delta-green { color: #059669; }
+.delta-grey { color: #64748b; }
+
+/* Filters row */
+.csr-filters-panel {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 12px 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.csr-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 6px 12px;
+	font-size: 0.82rem;
+	width: 240px;
+	outline: none;
+	color: #1e293b;
+}
+
+.csr-dropdowns-group {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+/* 3. Main Split Panels */
+.csr-split-layout {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 20px;
+}
+
+.csr-left-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.csr-panel-title-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.csr-panel-title-row h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.csr-view-all-link {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #059669;
+	text-decoration: none;
+}
+
+.csr-activities-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.csr-activity-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+}
+
+.csr-card-image-box {
+	height: 140px;
+	position: relative;
+	background: #f1f5f9;
+}
+
+.csr-card-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.csr-card-status-tag {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background: rgba(16, 185, 129, 0.9);
+	backdrop-filter: blur(4px);
+	color: #ffffff;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 4px 10px;
+	border-radius: 99px;
+}
+
+.csr-card-details {
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+}
+
+.csr-card-details h4 {
+	font-size: 0.95rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.csr-location-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.72rem;
+	color: #64748b;
+}
+
+.csr-meta-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	border-top: 1px solid #f1f5f9;
+	border-bottom: 1px solid #f1f5f9;
+	padding: 8px 0;
+	font-size: 0.72rem;
+	color: #475569;
+}
+
+.csr-meta-item {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.csr-meta-label {
+	font-size: 0.62rem;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+}
+
+.csr-meta-val {
+	font-weight: 600;
+	color: #1e293b;
+}
+
+.csr-progress-box {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.csr-progress-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #475569;
+}
+
+.csr-card-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: auto;
+	padding-top: 8px;
+}
+
+.csr-btn-card-outline {
+	flex: 1;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #334155;
+	cursor: pointer;
+	text-align: center;
+}
+
+.csr-btn-card-solid {
+	flex: 1;
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	cursor: pointer;
+	text-align: center;
+}
+
+/* CSR Calendar Widget */
+.csr-calendar-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.csr-calendar-card h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.csr-cal-header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.csr-cal-days-grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 6px;
+	text-align: center;
+}
+
+.csr-cal-weekday {
+	font-size: 0.62rem;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+}
+
+.csr-cal-day {
+	height: 32px;
+	display: grid;
+	place-items: center;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #334155;
+	border-radius: 6px;
+	position: relative;
+	cursor: pointer;
+}
+
+.csr-cal-day-other {
+	color: #cbd5e1;
+}
+
+.csr-cal-day-event {
+	background: #f0fdf4;
+	color: #15803d;
+	font-weight: 700;
+}
+
+.csr-cal-day-active {
+	box-shadow: 0 0 0 1.5px #15803d;
+}
+
+.csr-cal-marker-tooltip {
+	position: absolute;
+	top: -38px;
+	right: -40px;
+	background: #092c1f;
+	color: #ffffff;
+	font-size: 0.68rem;
+	padding: 6px 10px;
+	border-radius: 6px;
+	white-space: nowrap;
+	z-index: 10;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.csr-cal-marker-tooltip::after {
+	content: '';
+	position: absolute;
+	bottom: -4px;
+	left: 50%;
+	transform: translateX(-50%) rotate(45deg);
+	width: 8px;
+	height: 8px;
+	background: #092c1f;
+}
+
+.csr-cal-legend {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	font-size: 0.72rem;
+	color: #64748b;
+	border-top: 1px solid #f1f5f9;
+	padding-top: 12px;
+}
+
+.csr-cal-legend-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cal-legend-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+}
+
+@media (max-width: 1024px) {
+	.csr-split-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.csr-title-row {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.csr-metrics-row {
+		grid-template-columns: 1fr;
+	}
+
+	.csr-activities-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.csr-filters-panel {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.csr-search-input {
+		width: 100%;
+	}
+
+	.csr-dropdowns-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}

@@ -4,6 +4,7 @@ import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
 import DashboardLayout from './pages/dashboard/DashboardLayout.jsx'
 import EnvironmentalLayout from './pages/environmental/EnvironmentalLayout.jsx'
+import SocialLayout from './pages/social/SocialLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -64,10 +65,12 @@ function App() {
           <Route path="environmental-goals" element={<EnvironmentalGoals />} />
           <Route path="product-esg" element={<ProductESG />} />
         </Route>
-        <Route path="/social/csr-activities" element={<CSRActivities />} />
-        <Route path="/social/employee-participation" element={<EmployeeParticipation />} />
-        <Route path="/social/diversity-metrics" element={<DiversityMetrics />} />
-        <Route path="/social/training" element={<Training />} />
+        <Route path="/social" element={<SocialLayout />}>
+          <Route path="csr-activities" element={<CSRActivities />} />
+          <Route path="employee-participation" element={<EmployeeParticipation />} />
+          <Route path="diversity-metrics" element={<DiversityMetrics />} />
+          <Route path="training" element={<Training />} />
+        </Route>
         <Route path="/governance/policies" element={<Policies />} />
         <Route path="/governance/policy-acknowledgements" element={<PolicyAcknowledgements />} />
         <Route path="/governance/audits" element={<Audits />} />
