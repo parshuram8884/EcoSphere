@@ -267,3 +267,220 @@
 		grid-template-columns: 1fr;
 	}
 }
+
+/* ── Modal Overlay (shared style) ── */
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	padding: 20px;
+}
+
+.modal-content {
+	background: #ffffff;
+	border-radius: 16px;
+	width: 100%;
+	max-width: 540px;
+	max-height: 90vh;
+	overflow-y: auto;
+	box-shadow: 0 24px 70px rgba(3, 8, 18, 0.35);
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 24px 0;
+}
+
+.modal-header h3 {
+	margin: 0;
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.modal-close-btn {
+	background: none;
+	border: none;
+	font-size: 1.2rem;
+	color: #64748b;
+	cursor: pointer;
+	padding: 4px;
+	line-height: 1;
+}
+
+.modal-close-btn:hover {
+	color: #0f172a;
+}
+
+.modal-form {
+	padding: 20px 24px 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.form-group label {
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #334155;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+	padding: 10px 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 0.88rem;
+	color: #1e293b;
+	background: #f8fafc;
+	outline: none;
+	transition: border-color 0.15s;
+	font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+	border-color: #14b8a6;
+	background: #ffffff;
+}
+
+.form-group textarea {
+	resize: vertical;
+}
+
+/* Checkbox grid for emission factors */
+.checkbox-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 10px 12px;
+	background: #f8fafc;
+}
+
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.82rem;
+	color: #334155;
+	cursor: pointer;
+	padding: 4px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+	accent-color: #14b8a6;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.empty-hint {
+	margin: 0;
+	font-size: 0.8rem;
+	color: #94a3b8;
+	grid-column: 1 / -1;
+}
+
+.form-error {
+	background: #fef2f2;
+	color: #b91c1c;
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-size: 0.82rem;
+	border: 1px solid #fecaca;
+}
+
+.modal-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	padding-top: 4px;
+}
+
+.btn-cancel {
+	padding: 10px 18px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #ffffff;
+	color: #475569;
+	font-size: 0.85rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-cancel:hover {
+	background: #f8fafc;
+}
+
+.btn-submit {
+	padding: 10px 18px;
+	border: none;
+	border-radius: 8px;
+	background: #064e3b;
+	color: #ffffff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.15s;
+}
+
+.btn-submit:hover {
+	background: #065f46;
+}
+
+.loading-state {
+	padding: 60px 20px;
+	text-align: center;
+	color: #64748b;
+	font-size: 1rem;
+}
+
+.empty-state {
+	grid-column: 1 / -1;
+	padding: 60px 20px;
+	text-align: center;
+	color: #94a3b8;
+	font-size: 0.95rem;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+}
+
+.product-image-placeholder {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	place-items: center;
+	font-size: 2.4rem;
+	font-weight: 800;
+	color: #94a3b8;
+	background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+@media (max-width: 640px) {
+	.checkbox-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.modal-content {
+		max-width: 100%;
+		margin: 10px;
+	}
+}

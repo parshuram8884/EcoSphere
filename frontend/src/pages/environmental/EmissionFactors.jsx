@@ -1,18 +1,90 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { authFetch } from '../../services/api'
 import './EmissionFactors.css'
 
 export default function EmissionFactors() {
+  const [factors, setFactors] = useState([])
+  const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [standard, setStandard] = useState('All')
+  const [showModal, setShowModal] = useState(false)
+  const [error, setError] = useState('')
+  const [formData, setFormData] = useState({
+    name: '',
+    activity_type: '',
+    co2e_factor: '',
+    unit: '',
+    effective_date: '',
+  })
 
-  const factors = [
-    { name: 'Grid Electricity (US Northwest)', source: 'Source: eGRID 2024', scope: 'Scope 2', value: '0.32418', unit: 'kg CO₂e / kWh', effective: 'Jan 2024 — Dec 2024', modified: 'A. Sterling (2d ago)' },
-    { name: 'Natural Gas (Industrial Mix)', source: 'Source: DEFRA 2023', scope: 'Scope 1', value: '2.02135', unit: 'kg CO₂e / m³', effective: 'Apr 2023 — Mar 2024', modified: 'M. Chen (5d ago)' },
-    { name: 'Cloud Compute (Generic Instance)', source: 'Source: Internal Audit / AWS Bill', scope: 'Scope 3', value: '0.00250', unit: 'kg CO₂e / hr', effective: 'Jan 2024 — Permanent', modified: 'J. Doe (1w ago)' },
-    { name: 'Domestic Flights (Average)', source: 'Source: IPCC Tier 1', scope: 'Scope 3', value: '0.15000', unit: 'kg CO₂e / pkm', effective: 'Jan 2022 — Dec 2024', modified: 'System (1mo ago)' },
-    { name: 'Passenger Van (Diesel Euro 6)', source: 'Source: ADEME Base Carbone', scope: 'Scope 1', value: '0.24520', unit: 'kg CO₂e / km', effective: 'Jan 2024 — Dec 2025', modified: 'A. Sterling (3w ago)' },
-    { name: 'Steel Production (Secondary)', source: 'Source: World Steel Association', scope: 'Scope 3', value: '425.000', unit: 'kg CO₂e / tonne', effective: 'Jan 2023 — Dec 2025', modified: 'L. Weber (2mo ago)' }
-  ]
+  // Fetch emission factors from backend
+  const fetchFactors = async () => {
+    try {
+      const res = await authFetch('/environmental/emission-factors/')
+      if (res.ok) {
+        const data = await res.json()
+        setFactors(data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch emission factors:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchFactors()
+  }, [])
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setError('')
+  }
+
+  // Submit new factor
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    // Basic validation
+    if (!formData.name || !formData.activity_type || !formData.co2e_factor || !formData.unit || !formData.effective_date) {
+      setError('Please fill in all fields.')
+      return
+    }
+
+    try {
+      const res = await authFetch('/environmental/emission-factors/', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: formData.name,
+          activity_type: formData.activity_type,
+          co2e_factor: parseFloat(formData.co2e_factor),
+          unit: formData.unit,
+          effective_date: formData.effective_date,
+        }),
+      })
+
+      if (res.ok) {
+        setShowModal(false)
+        setFormData({ name: '', activity_type: '', co2e_factor: '', unit: '', effective_date: '' })
+        // Refresh the list
+        fetchFactors()
+      } else {
+        const errData = await res.json()
+        setError(Object.values(errData).flat().join(', '))
+      }
+    } catch (err) {
+      setError('Failed to create factor. Please try again.')
+    }
+  }
+
+  // Filter factors based on search and standard filter
+  const filteredFactors = factors.filter((f) => {
+    const matchesSearch = searchQuery === '' ||
+      f.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesSearch
+  })
 
   const getScopeBadge = (scope) => {
     switch (scope) {
@@ -27,9 +99,17 @@ export default function EmissionFactors() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="registry-container">
+        <div className="loading-state">Loading emission factors...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="registry-container">
-      {/* 1. Summary Header Card */}
+      {/* ── Summary Header Card ── */}
       <article className="registry-header-row">
         <div className="registry-title-block">
           <h2>Emission Factors Registry</h2>
@@ -39,17 +119,17 @@ export default function EmissionFactors() {
         </div>
 
         <div className="registry-actions-bar">
-          <input 
-            type="search" 
-            className="registry-search-input" 
-            placeholder="Search Registry..." 
+          <input
+            type="search"
+            className="registry-search-input"
+            placeholder="Search Registry..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
 
-          <select 
-            className="registry-dropdown" 
-            value={standard} 
+          <select
+            className="registry-dropdown"
+            value={standard}
             onChange={(e) => setStandard(e.target.value)}
           >
             <option value="All">Standard: All Sources</option>
@@ -58,102 +138,191 @@ export default function EmissionFactors() {
             <option value="IPCC">IPCC</option>
           </select>
 
-          <button type="button" className="registry-btn-add">
+          <button type="button" className="registry-btn-add" onClick={() => setShowModal(true)}>
             ➕ Add New Factor
           </button>
         </div>
       </article>
 
-      {/* 2. Registry Table Card */}
+      {/* ── Registry Table Card ── */}
       <article className="registry-table-card">
         <div className="registry-table-wrapper">
           <table className="registry-table">
             <thead>
               <tr>
                 <th>Factor Name / Source</th>
-                <th>Category / Scope</th>
+                <th>Activity Type</th>
                 <th>Value</th>
                 <th>Unit Basis</th>
                 <th>Effective Date</th>
-                <th>Last Modified</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {factors.map((factor) => (
-                <tr key={factor.name}>
-                  <td>
-                    <span className="td-factor-name">{factor.name}</span>
-                    <span className="td-factor-sub">{factor.source}</span>
-                  </td>
-                  <td>{getScopeBadge(factor.scope)}</td>
-                  <td className="td-value-num">{factor.value}</td>
-                  <td className="td-unit-basis"><code>{factor.unit}</code></td>
-                  <td>{factor.effective}</td>
-                  <td>{factor.modified}</td>
-                  <td>
-                    <div className="registry-actions-btns">
-                      <button type="button" className="registry-action-icon" aria-label="Edit">✏️</button>
-                      <button type="button" className="registry-action-icon" aria-label="History">📁</button>
-                    </div>
+              {filteredFactors.length === 0 ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '40px 20px', color: '#94a3b8' }}>
+                    No emission factors found. Click "Add New Factor" to create one.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredFactors.map((factor) => (
+                  <tr key={factor.id}>
+                    <td>
+                      <span className="td-factor-name">{factor.name}</span>
+                      <span className="td-factor-sub">{factor.activity_type}</span>
+                    </td>
+                    <td>{getScopeBadge(factor.scope)}</td>
+                    <td className="td-value-num">{factor.co2e_factor}</td>
+                    <td className="td-unit-basis"><code>{factor.unit}</code></td>
+                    <td>{factor.effective_date}</td>
+                    <td>
+                      <div className="registry-actions-btns">
+                        <button type="button" className="registry-action-icon" aria-label="Edit">✏️</button>
+                        <button type="button" className="registry-action-icon" aria-label="History">📁</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
-        {/* Ledger Footer & Pagination */}
         <div className="ledger-footer">
-          <span>Showing 6 of 142 Factors</span>
+          <span>Showing {filteredFactors.length} of {factors.length} Factors</span>
           <div className="ledger-pagination">
             <button type="button" className="pagination-btn">&lt;</button>
             <button type="button" className="pagination-btn pagination-btn-active">1</button>
-            <button type="button" className="pagination-btn">2</button>
-            <button type="button" className="pagination-btn">3</button>
             <button type="button" className="pagination-btn">&gt;</button>
           </div>
         </div>
       </article>
 
-      {/* 3. Three Summary Stats Cards */}
+      {/* ── Summary Stats Cards ── */}
       <section className="registry-bottom-row" aria-label="Registry summary metrics">
-        {/* Card 1 */}
         <article className="registry-stat-card">
           <div className="registry-stat-icon-wrapper icon-bg-active" aria-hidden="true">
             ✓
           </div>
           <div className="registry-stat-details">
-            <span className="registry-stat-label">Active Standards</span>
-            <strong className="registry-stat-val">12</strong>
-            <span className="registry-stat-desc">Verified global registry sets synchronized.</span>
+            <span className="registry-stat-label">Total Factors</span>
+            <strong className="registry-stat-val">{factors.length}</strong>
+            <span className="registry-stat-desc">Emission factors in the registry.</span>
           </div>
         </article>
 
-        {/* Card 2 */}
-        <article className="registry-stat-card">
-          <div className="registry-stat-icon-wrapper icon-bg-pending" aria-hidden="true">
-            ⚠️
-          </div>
-          <div className="registry-stat-details">
-            <span className="registry-stat-label">Pending Review</span>
-            <strong className="registry-stat-val">08</strong>
-            <span className="registry-stat-desc">Factors awaiting annual standard updates.</span>
-          </div>
-        </article>
-
-        {/* Card 3 */}
         <article className="registry-stat-card">
           <div className="registry-stat-icon-wrapper icon-bg-coverage" aria-hidden="true">
             📈
           </div>
           <div className="registry-stat-details">
-            <span className="registry-stat-label">Registry Coverage</span>
-            <strong className="registry-stat-val">94%</strong>
-            <span className="registry-stat-desc">Activity types mapped to coefficients.</span>
+            <span className="registry-stat-label">Activity Types</span>
+            <strong className="registry-stat-val">{new Set(factors.map(f => f.activity_type)).size}</strong>
+            <span className="registry-stat-desc">Unique activity categories mapped.</span>
+          </div>
+        </article>
+
+        <article className="registry-stat-card">
+          <div className="registry-stat-icon-wrapper icon-bg-pending" aria-hidden="true">
+            ⚙️
+          </div>
+          <div className="registry-stat-details">
+            <span className="registry-stat-label">Status</span>
+            <strong className="registry-stat-val" style={{ fontSize: '1.1rem' }}>Active</strong>
+            <span className="registry-stat-desc">Registry is operational.</span>
           </div>
         </article>
       </section>
+
+      {/* ── Add New Factor Modal ── */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Add New Emission Factor</h3>
+              <button type="button" className="modal-close-btn" onClick={() => setShowModal(false)}>✕</button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="modal-form">
+              <div className="form-group">
+                <label htmlFor="name">Factor Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="e.g. Grid Electricity (US Northwest)"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="activity_type">Activity Type</label>
+                <input
+                  id="activity_type"
+                  name="activity_type"
+                  type="text"
+                  placeholder="e.g. Electricity, Fuel, Transport"
+                  value={formData.activity_type}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="co2e_factor">CO₂e Factor</label>
+                  <input
+                    id="co2e_factor"
+                    name="co2e_factor"
+                    type="number"
+                    step="any"
+                    placeholder="e.g. 0.32418"
+                    value={formData.co2e_factor}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="unit">Unit</label>
+                  <input
+                    id="unit"
+                    name="unit"
+                    type="text"
+                    placeholder="e.g. kg CO₂e / kWh"
+                    value={formData.unit}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="effective_date">Effective Date</label>
+                <input
+                  id="effective_date"
+                  name="effective_date"
+                  type="date"
+                  value={formData.effective_date}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {error && <div className="form-error">{error}</div>}
+
+              <div className="modal-actions">
+                <button type="button" className="btn-cancel" onClick={() => setShowModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-submit">
+                  Create Factor
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
+
+
