@@ -1,0 +1,149 @@
+/* ESG Configuration styling */
+.settings-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Constraint Banner */
+.settings-constraint-banner {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.settings-constraint-text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.settings-constraint-title {
+	font-size: 0.95rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.settings-constraint-desc {
+	font-size: 0.78rem;
+	color: #64748b;
+}
+
+.constraint-sum-badge {
+	font-size: 0.95rem;
+	font-weight: 800;
+	padding: 6px 16px;
+	border-radius: 8px;
+	text-transform: uppercase;
+}
+
+.sum-ok { background: #ecfdf5; color: #047857; border: 1.5px solid #059669; }
+.sum-err { background: #fef2f2; color: #b91c1c; border: 1.5px solid #ef4444; }
+
+/* 2. Weight Configuration Cards */
+.settings-weights-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.settings-weight-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.settings-weight-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #f1f5f9;
+	padding-bottom: 12px;
+}
+
+.settings-weight-card-header h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.weight-card-value {
+	font-size: 1.15rem;
+	font-weight: 800;
+	color: #059669;
+}
+
+.settings-slider-group {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.slider-control-row {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.slider-meta {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #475569;
+}
+
+.settings-range-input {
+	width: 100%;
+	accent-color: #059669;
+	cursor: pointer;
+}
+
+/* 3. Organization Profile Layout Sub-Section */
+.settings-profile-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.settings-profile-card h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.profile-meta-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+@media (max-width: 1024px) {
+	.settings-weights-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.profile-meta-grid {
+		grid-template-columns: 1fr;
+	}
+}

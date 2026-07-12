@@ -1,0 +1,149 @@
+/* Notification Settings styling */
+.notif-set-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Global Save Header */
+.notif-set-header-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.notif-set-header-bar h2 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.notif-set-actions {
+	display: flex;
+	gap: 12px;
+}
+
+/* 2. Frequency Control Matrix Stack */
+.notif-set-matrix {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.notif-set-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.notif-set-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #f1f5f9;
+	padding-bottom: 12px;
+}
+
+.notif-set-card-title-block {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.notif-set-card-title-block h3 {
+	font-size: 0.95rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.notif-set-card-title-block p {
+	font-size: 0.78rem;
+	color: #64748b;
+	margin: 0;
+}
+
+.notif-set-frequency-select {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 6px 12px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #334155;
+	outline: none;
+}
+
+.notif-set-channels-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.notif-channel-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 12px 16px;
+}
+
+.notif-channel-label {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.notif-channel-name {
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #334155;
+}
+
+.notif-channel-desc {
+	font-size: 0.68rem;
+	color: #64748b;
+}
+
+/* Toggle Switch glow */
+.notif-switch-input:checked + .switch-toggle-slider {
+	background-color: #059669;
+	box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
+}
+
+@media (max-width: 1024px) {
+	.notif-set-channels-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 760px) {
+	.notif-set-channels-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.notif-set-header-bar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.notif-set-actions {
+		flex-direction: column;
+	}
+}

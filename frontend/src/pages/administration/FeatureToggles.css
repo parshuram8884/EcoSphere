@@ -1,0 +1,126 @@
+/* Feature Toggles styling */
+.flags-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Flag Search & Summary Ribbon */
+.flags-header-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.flags-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	width: 260px;
+	outline: none;
+	color: #1e293b;
+}
+
+.flags-summary-stats {
+	display: flex;
+	gap: 16px;
+}
+
+.flags-stat-item {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #475569;
+}
+
+.flags-stat-item span {
+	font-weight: 800;
+	color: #059669;
+}
+
+/* 2. Toggle Grid Layout */
+.flags-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.flag-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	position: relative;
+}
+
+.flag-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.flag-card-title-block {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	max-width: 80%;
+}
+
+.flag-card-title-block h3 {
+	font-size: 0.95rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+	line-height: 1.35;
+}
+
+.flag-env-badge {
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+	text-transform: uppercase;
+	width: fit-content;
+}
+
+.env-prod { background: #fef2f2; color: #b91c1c; }
+.env-staging { background: #eff6ff; color: #1d4ed8; }
+
+.flag-card-desc {
+	font-size: 0.78rem;
+	color: #64748b;
+	line-height: 1.45;
+}
+
+/* 3. Risk Mitigation Confirmation Warning */
+.flag-risk-banner {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	background: #fff7ed;
+	border: 1px solid #ffedd5;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 0.72rem;
+	color: #c2410c;
+	font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+	.flags-grid {
+		grid-template-columns: 1fr;
+	}
+}
