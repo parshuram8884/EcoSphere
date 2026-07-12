@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
+import DashboardLayout from './pages/dashboard/DashboardLayout.jsx'
+import EnvironmentalLayout from './pages/environmental/EnvironmentalLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -48,16 +50,20 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/dashboard/overview" element={<OverviewDashboard />} />
-        <Route path="/dashboard/analytics" element={<Analytics />} />
-        <Route path="/dashboard/department-ranking" element={<DepartmentRanking />} />
-        <Route path="/dashboard/activity-feed" element={<ActivityFeed />} />
-        <Route path="/dashboard/notifications" element={<Notifications />} />
-        <Route path="/environmental/dashboard" element={<EnvironmentalDashboard />} />
-        <Route path="/environmental/carbon-transactions" element={<CarbonTransactions />} />
-        <Route path="/environmental/emission-factors" element={<EmissionFactors />} />
-        <Route path="/environmental/environmental-goals" element={<EnvironmentalGoals />} />
-        <Route path="/environmental/product-esg" element={<ProductESG />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="overview" element={<OverviewDashboard />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="department-ranking" element={<DepartmentRanking />} />
+          <Route path="activity-feed" element={<ActivityFeed />} />
+          <Route path="notifications" element={<Notifications />} />
+        </Route>
+        <Route path="/environmental" element={<EnvironmentalLayout />}>
+          <Route path="dashboard" element={<EnvironmentalDashboard />} />
+          <Route path="carbon-transactions" element={<CarbonTransactions />} />
+          <Route path="emission-factors" element={<EmissionFactors />} />
+          <Route path="environmental-goals" element={<EnvironmentalGoals />} />
+          <Route path="product-esg" element={<ProductESG />} />
+        </Route>
         <Route path="/social/csr-activities" element={<CSRActivities />} />
         <Route path="/social/employee-participation" element={<EmployeeParticipation />} />
         <Route path="/social/diversity-metrics" element={<DiversityMetrics />} />
