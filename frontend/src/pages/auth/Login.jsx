@@ -1,8 +1,40 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { loginUser, fetchMe } from '../../services/api'
+import { useAuth } from '../../context/AuthContext'
 import heroImage from '../../assets/hero.png'
 import './Login.css'
 
 export default function Login() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const navigate = useNavigate()
+  const { login } = useAuth()
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    setSubmitting(true)
+
+    const result = await loginUser(username, password)
+
+    if (result.success) {
+      // Fetch user profile after login
+      const userData = await fetchMe()
+      if (userData) {
+        login(userData)
+      }
+      navigate('/dashboard/overview')
+    } else {
+      // SimpleJWT returns { detail: "..." } on failure
+      setError(result.errors?.detail || 'Invalid credentials. Please try again.')
+    }
+
+    setSubmitting(false)
+  }
+
   return (
     <main className="auth-page">
       <section className="auth-card">
@@ -41,15 +73,33 @@ export default function Login() {
               <p>Enter your credentials to access your ESG dashboard.</p>
             </div>
 
-            <form className="auth-form">
+            {error && (
+              <div className="auth-error">
+                {error}
+              </div>
+            )}
+
+            <form className="auth-form" onSubmit={handleSubmit}>
               <label className="auth-field">
-                <span>Corporate Email</span>
-                <input type="email" placeholder="name@company.com" />
+                <span>Username</span>
+                <input
+                  type="text"
+                  placeholder="your_username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
               </label>
 
               <label className="auth-field">
                 <span>Password</span>
-                <input type="password" placeholder="••••••••" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </label>
 
               <div className="auth-row auth-row-between">
@@ -63,16 +113,14 @@ export default function Login() {
                 </a>
               </div>
 
-              <button type="submit" className="auth-submit">
-                Sign in to Platform <span aria-hidden="true">→</span>
+              <button type="submit" className="auth-submit" disabled={submitting}>
+                {submitting ? 'Signing in…' : 'Sign in to Platform'} <span aria-hidden="true">→</span>
               </button>
 
               <p className="auth-signup">
                 Don&apos;t have an account? <Link to="/auth/register">Sign up</Link>
               </p>
             </form>
-
-          
 
             <footer className="auth-footer">
               <span>© 2024 EcoSphere ESG</span>
