@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import './SocialReport.css'
+import { downloadReport } from '../../services/api'
 
 export default function SocialReport() {
   const [pillar, setPillar] = useState('All')
 
-  const handleExportBriefing = () => {
-    alert('Simulating Document Export: Compiling consolidated Social brief containing CSR returns and safety rates...')
+  const handleExportBriefing = async () => {
+    const r = await downloadReport('social', 'pdf')
+    if (!r.ok) alert('Export failed: ' + r.message)
   }
 
   return (

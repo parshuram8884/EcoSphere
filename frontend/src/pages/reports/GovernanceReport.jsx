@@ -1,4 +1,5 @@
 import './GovernanceReport.css'
+import { downloadReport } from '../../services/api'
 
 export default function GovernanceReport() {
   const auditPoints = [
@@ -7,12 +8,14 @@ export default function GovernanceReport() {
     { point: 'Whistleblower hotline test', action: 'Conduct live mock triage session', due: 'Dec 01, 2024', status: 'Verified' }
   ]
 
-  const handleGenerateDeck = () => {
-    alert('Simulating PDF compilation: Compiling Board Presentation deck containing governance metric summaries...')
+  const handleGenerateDeck = async () => {
+    const r = await downloadReport('governance_deck', 'pdf')
+    if (!r.ok) alert('Export failed: ' + r.message)
   }
 
-  const handleDownloadZip = () => {
-    alert('Preparing ISO Compliance Package: Compiling policy drafts, audit reports, and logs into zip container...')
+  const handleDownloadZip = async () => {
+    const r = await downloadReport('governance_iso', 'pdf')
+    if (!r.ok) alert('Export failed: ' + r.message)
   }
 
   return (

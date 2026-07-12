@@ -1,4 +1,5 @@
 import './ESGSummary.css'
+import { downloadReport } from '../../services/api'
 
 export default function ESGSummary() {
   const departments = [
@@ -8,8 +9,9 @@ export default function ESGSummary() {
     { name: 'Corporate Office', env: 'High', soc: 'High', gov: 'High' }
   ]
 
-  const handleExportFull = () => {
-    alert('Simulating PDF Compilation: Bundling complete Integrated ESG Annual Report including validation ledgers...')
+  const handleExportFull = async () => {
+    const r = await downloadReport('esg_summary', 'pdf')
+    if (!r.ok) alert('Export failed: ' + r.message)
   }
 
   const getPerfTag = (score) => {

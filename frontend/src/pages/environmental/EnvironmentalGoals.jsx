@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './EnvironmentalGoals.css'
+import { downloadReport } from '../../services/api'
 
 export default function EnvironmentalGoals() {
   const [scope, setScope] = useState('Global (All)')
@@ -48,7 +49,10 @@ export default function EnvironmentalGoals() {
         </div>
 
         <div className="goals-header-actions">
-          <button type="button" className="env-btn-primary">
+          <button type="button" className="env-btn-primary" onClick={async () => {
+            const r = await downloadReport('environmental_goals', 'pdf')
+            if (!r.ok) alert('Export failed: ' + r.message)
+          }}>
             Export Report
           </button>
         </div>
