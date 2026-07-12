@@ -6,6 +6,7 @@ import DashboardLayout from './pages/dashboard/DashboardLayout.jsx'
 import EnvironmentalLayout from './pages/environmental/EnvironmentalLayout.jsx'
 import SocialLayout from './pages/social/SocialLayout.jsx'
 import GovernanceLayout from './pages/governance/GovernanceLayout.jsx'
+import GamificationLayout from './pages/gamification/GamificationLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -78,11 +79,13 @@ function App() {
           <Route path="audits" element={<Audits />} />
           <Route path="compliance-issues" element={<ComplianceIssues />} />
         </Route>
-        <Route path="/gamification/challenges" element={<Challenges />} />
-        <Route path="/gamification/challenge-participation" element={<ChallengeParticipation />} />
-        <Route path="/gamification/badges" element={<Badges />} />
-        <Route path="/gamification/rewards" element={<Rewards />} />
-        <Route path="/gamification/leaderboard" element={<Leaderboard />} />
+        <Route path="/gamification" element={<GamificationLayout />}>
+          <Route path="challenges" element={<Challenges />} />
+          <Route path="challenge-participation" element={<ChallengeParticipation />} />
+          <Route path="badges" element={<Badges />} />
+          <Route path="rewards" element={<Rewards />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
+        </Route>
         <Route path="/reports/environmental-report" element={<EnvironmentalReport />} />
         <Route path="/reports/social-report" element={<SocialReport />} />
         <Route path="/reports/governance-report" element={<GovernanceReport />} />
