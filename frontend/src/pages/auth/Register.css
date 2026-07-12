@@ -1,0 +1,380 @@
+.register-page {
+	min-height: 100vh;
+	padding: 18px;
+	display: grid;
+	place-items: center;
+	background: #131416;
+	position: relative;
+	overflow: hidden;
+}
+
+.register-page::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+		radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+	background-size: 14px 14px, 14px 14px;
+	background-position: 0 0, 7px 7px;
+	opacity: 0.14;
+	pointer-events: none;
+}
+
+.register-card {
+	position: relative;
+	z-index: 1;
+	width: min(1280px, 100%);
+	min-height: min(860px, calc(100vh - 36px));
+	display: grid;
+	grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 28px 80px rgba(0, 0, 0, 0.52);
+	background: #f8faf6;
+}
+
+.register-visual {
+	position: relative;
+	background: linear-gradient(180deg, #1f5a44 0%, #174a39 100%);
+	min-height: 100%;
+	overflow: hidden;
+}
+
+.register-pattern {
+	position: absolute;
+	inset: 0;
+	background-image:
+		radial-gradient(rgba(255, 255, 255, 0.38) 1.1px, transparent 1.1px);
+	background-size: 12px 12px;
+	opacity: 0.42;
+	pointer-events: none;
+}
+
+.register-visual-overlay {
+	position: relative;
+	z-index: 1;
+	min-height: 100%;
+	padding: 24px 22px 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	color: #f7fbf7;
+}
+
+.register-brand-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.register-brand-mark {
+	width: 26px;
+	height: 26px;
+	border-radius: 999px;
+	display: grid;
+	place-items: center;
+	background: rgba(255, 255, 255, 0.92);
+	color: #154233;
+	font-size: 0.95rem;
+	font-weight: 800;
+}
+
+.register-copy-block {
+	display: grid;
+	gap: 8px;
+	max-width: 440px;
+}
+
+.register-kicker {
+	margin: 0;
+	font-size: clamp(1.7rem, 2.6vw, 3.1rem);
+	font-weight: 800;
+	line-height: 0.98;
+	letter-spacing: -0.05em;
+}
+
+.register-copy-block h1 {
+	margin: 0;
+	font-size: clamp(2.1rem, 4vw, 3.8rem);
+	line-height: 0.98;
+	letter-spacing: -0.06em;
+}
+
+.register-copy-block p {
+	margin: 0;
+	max-width: 42ch;
+	font-size: 0.96rem;
+	line-height: 1.55;
+	color: rgba(244, 248, 244, 0.84);
+}
+
+.register-poster {
+	margin-top: 8px;
+	align-self: center;
+	width: min(100%, 420px);
+	background: rgba(9, 25, 18, 0.18);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.register-poster-image {
+	display: block;
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	filter: saturate(0.92) brightness(0.8);
+}
+
+.register-poster-caption {
+	padding: 14px 14px 16px;
+	background: rgba(8, 22, 15, 0.82);
+}
+
+.register-poster-caption h2 {
+	margin: 0 0 6px;
+	font-size: 1.15rem;
+	line-height: 1.05;
+}
+
+.register-poster-caption p {
+	margin: 0;
+	font-size: 0.86rem;
+	line-height: 1.45;
+	color: rgba(229, 241, 232, 0.82);
+}
+
+.register-badges {
+	margin-top: auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+.register-badges span {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-radius: 999px;
+	background: rgba(6, 24, 16, 0.36);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.register-form-panel {
+	display: grid;
+	place-items: center;
+	padding: 28px 24px;
+	background: #fffdf9;
+}
+
+.register-form-card {
+	width: min(472px, 100%);
+	color: #111827;
+	display: grid;
+	gap: 18px;
+}
+
+.register-heading-block {
+	display: grid;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.register-heading-block h2 {
+	margin: 0;
+	font-size: clamp(1.8rem, 3vw, 2.2rem);
+	line-height: 1.05;
+	letter-spacing: -0.04em;
+}
+
+.register-heading-block p {
+	margin: 0;
+	font-size: 0.98rem;
+	color: #5f6674;
+}
+
+.register-form {
+	display: grid;
+	gap: 14px;
+}
+
+.register-grid-2 {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.register-field {
+	display: grid;
+	gap: 8px;
+}
+
+.register-field span {
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: #101828;
+}
+
+.register-field input,
+.register-field select {
+	width: 100%;
+	height: 40px;
+	border-radius: 4px;
+	border: 1px solid #d7dce3;
+	background: #fff;
+	padding: 0 12px;
+	outline: none;
+	transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.register-field input::placeholder,
+.register-field select {
+	color: #98a2b3;
+}
+
+.register-field input:focus,
+.register-field select:focus {
+	border-color: #1f5a44;
+	box-shadow: 0 0 0 4px rgba(31, 90, 68, 0.1);
+}
+
+.register-check {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 0.85rem;
+	line-height: 1.45;
+	color: #101828;
+}
+
+.register-check input {
+	margin-top: 3px;
+	width: 14px;
+	height: 14px;
+	accent-color: #1f5a44;
+}
+
+.register-check a {
+	font-weight: 700;
+	color: #1f5a44;
+}
+
+.register-submit {
+	height: 44px;
+	border: 0;
+	border-radius: 6px;
+	background: linear-gradient(180deg, #1f5a44, #184737);
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.register-submit:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px rgba(24, 71, 55, 0.18);
+}
+
+.register-signin {
+	margin: 2px 0 0;
+	text-align: center;
+	font-size: 0.88rem;
+	color: #475467;
+}
+
+.register-signin a {
+	font-weight: 700;
+	color: #1f5a44;
+}
+
+.register-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	padding-top: 4px;
+	font-size: 0.78rem;
+	color: #667085;
+}
+
+.register-footer div {
+	display: flex;
+	gap: 14px;
+	flex-wrap: wrap;
+}
+
+.register-footer a {
+	color: #667085;
+}
+
+@media (max-width: 1100px) {
+	.register-card {
+		grid-template-columns: 1fr;
+		min-height: auto;
+	}
+
+	.register-visual {
+		min-height: 520px;
+	}
+
+	.register-form-panel {
+		padding: 24px 18px 28px;
+	}
+
+	.register-form-card {
+		width: min(520px, 100%);
+	}
+}
+
+@media (max-width: 720px) {
+	.register-page {
+		padding: 10px;
+	}
+
+	.register-card {
+		border-radius: 8px;
+	}
+
+	.register-visual {
+		min-height: 380px;
+	}
+
+	.register-visual-overlay {
+		padding: 18px;
+	}
+
+	.register-poster-image {
+		height: 240px;
+	}
+
+	.register-grid-2 {
+		grid-template-columns: 1fr;
+	}
+
+	.register-footer,
+	.register-check {
+		align-items: flex-start;
+	}
+
+	.register-footer {
+		flex-direction: column;
+	}
+
+	.register-footer div {
+		gap: 10px;
+	}
+
+	.register-badges {
+		margin-top: 4px;
+	}
+}
