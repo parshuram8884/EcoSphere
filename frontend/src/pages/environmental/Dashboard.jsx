@@ -1,4 +1,5 @@
 import './Dashboard.css'
+import { downloadReport } from '../../services/api'
 
 export default function Dashboard() {
   const breakdownData = [
@@ -31,7 +32,10 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="env-health-actions">
-          <button type="button" className="env-btn-primary">
+          <button type="button" className="env-btn-primary" onClick={async () => {
+            const r = await downloadReport('environmental', 'pdf')
+            if (!r.ok) alert('Export failed: ' + r.message)
+          }}>
             Export Report
           </button>
           <button type="button" className="env-btn-secondary">

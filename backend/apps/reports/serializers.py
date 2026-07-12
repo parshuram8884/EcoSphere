@@ -6,7 +6,7 @@ class ReportRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ReportRequest
-        fields = ['id', 'filters_snapshot', 'format', 'generated_by', 'generated_by_name', 'generated_at', 'file']
+        fields = ['id', 'report_type', 'filters_snapshot', 'format', 'generated_by', 'generated_by_name', 'generated_at', 'file']
         read_only_fields = ['generated_at', 'file', 'generated_by']
 
     def get_generated_by_name(self, obj):

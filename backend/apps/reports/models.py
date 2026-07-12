@@ -7,8 +7,9 @@ class ReportRequest(models.Model):
         ('csv', 'CSV'),
     ]
 
+    report_type = models.CharField(max_length=100, default='custom')
     filters_snapshot = models.JSONField(default=dict, blank=True)
-    format = models.CharField(max_length=10, choices=FORMAT_CHOICES)
+    format = models.CharField(max_length=10, choices=FORMAT_CHOICES, default='pdf')
     generated_by = models.ForeignKey('authentication.Employee', on_delete=models.SET_NULL, null=True)
     generated_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='reports/', null=True, blank=True)

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/navbar/Navbar.jsx'
+import { useAuth } from '../../context/AuthContext'
 import './GovernanceLayout.css'
 
 export default function GovernanceLayout() {
@@ -12,12 +13,30 @@ export default function GovernanceLayout() {
     return location.pathname === path ? 'layout-tab-link layout-tab-link-active' : 'layout-tab-link'
   }
 
+  const { user: authUser, logout } = useAuth()
+  const navigate = useNavigate()
+  const [exporting, setExporting] = useState(false)
+
   const user = {
-    name: 'Marcus Thome',
-    role: 'Sustainability Lead',
+    name: authUser ? `${authUser.first_name || ''} ${authUser.last_name || ''}`.trim() || authUser.username : 'Guest',
+    role: authUser?.role?.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'Employee',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
     goalPct: 78,
     goalText: 'of Net Zero Target reached'
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/auth/login')
+  }
+
+  const handleExport = async (format = 'pdf') => {
+    setExporting(true)
+    const result = await downloadReport('governance', format)
+    setExporting(false)
+    if (!result.ok) {
+      alert('Export failed: ' + result.message)
+    }
   }
 
   return (
@@ -75,6 +94,9 @@ export default function GovernanceLayout() {
             <span>{user.role}</span>
           </div>
         </div>
+        <button type="button" onClick={handleLogout} style={{margin:'12px 16px',padding:'10px 16px',background:'rgba(239,68,68,0.1)',color:'#ef4444',border:'1px solid rgba(239,68,68,0.2)',borderRadius:8,cursor:'pointer',fontSize:'0.85rem',fontWeight:600,display:'flex',alignItems:'center',gap:8}}>
+          <span>🚪</span> Logout
+        </button>
       </aside>
 
       {/* Layout Content Workspace */}

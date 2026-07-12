@@ -150,3 +150,48 @@ export async function fetchMe() {
 export function logoutUser() {
   clearTokens();
 }
+
+/**
+ * Download a report file from the backend.
+ * Sends a POST to /api/reports/generate/ and triggers a browser file download.
+ * 
+ * @param {string} reportType - The report type (e.g. 'environmental', 'governance', 'overview')
+ * @param {string} format - File format: 'pdf', 'excel', or 'csv'
+ * @returns {Promise<{ok: boolean, message: string}>}
+ */
+export async function downloadReport(reportType = 'custom', format = 'pdf') {
+  try {
+    const response = await authFetch('/reports/generate/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ report_type: reportType, format }),
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      return { ok: false, message: err.detail || `Error ${response.status}` };
+    }
+
+    // Get the file blob and trigger download
+    const blob = await response.blob();
+    const contentDisposition = response.headers.get('Content-Disposition');
+    let filename = `EcoSphere_Report_${reportType}.${format === 'excel' ? 'xlsx' : format}`;
+    if (contentDisposition) {
+      const match = contentDisposition.match(/filename="?([^"]+)"?/);
+      if (match) filename = match[1];
+    }
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+    return { ok: true, message: 'Download started' };
+  } catch (err) {
+    return { ok: false, message: err.message || 'Network error' };
+  }
+}
