@@ -1,0 +1,235 @@
+/* Custom Report Builder stylesheet */
+.builder-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Split-Panel Customization Workspace */
+.builder-workspace-grid {
+	display: grid;
+	grid-template-columns: 3fr 7fr;
+	gap: 20px;
+}
+
+/* Left panel block inventory */
+.builder-inventory-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	height: calc(100vh - 280px);
+	overflow-y: auto;
+}
+
+.builder-inventory-card h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.builder-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 0.82rem;
+	outline: none;
+	color: #1e293b;
+	width: 100%;
+}
+
+.builder-inventory-sections {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.inventory-section {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.inventory-section-title {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.inventory-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #f8fafc;
+	border: 1.5px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #334155;
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.15s ease;
+}
+
+.inventory-item:hover {
+	border-color: #059669;
+	background: #f0fdf4;
+	color: #047857;
+}
+
+.inventory-item-active {
+	border-color: #059669;
+	background: #f0fdf4;
+	color: #047857;
+}
+
+.inventory-item-drag-icon {
+	font-size: 1rem;
+	color: #94a3b8;
+}
+
+/* Right main canvas and grid preview */
+.builder-canvas-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	height: calc(100vh - 280px);
+	overflow-y: auto;
+}
+
+.canvas-placeholder-zone {
+	border: 2px dashed #cbd5e1;
+	background: #f8fafc;
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 100px;
+}
+
+.canvas-placeholder-zone p {
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #64748b;
+	margin: 0;
+}
+
+.canvas-active-tags {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-top: 8px;
+}
+
+.canvas-tag {
+	background: #ecfdf5;
+	border: 1px solid #a7f3d0;
+	color: #047857;
+	font-size: 0.72rem;
+	font-weight: 700;
+	padding: 4px 10px;
+	border-radius: 99px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.canvas-tag-remove {
+	background: none;
+	border: none;
+	color: #047857;
+	cursor: pointer;
+	font-size: 0.85rem;
+	padding: 0;
+}
+
+/* Real-time datagrid */
+.builder-datagrid-box {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+}
+
+.builder-datagrid-box h4 {
+	font-size: 0.82rem;
+	font-weight: 800;
+	color: #334155;
+	margin: 0;
+}
+
+.builder-table-wrapper {
+	overflow-x: auto;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+}
+
+.builder-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.78rem;
+}
+
+.builder-table th {
+	background: #f8fafc;
+	border-bottom: 1px solid #cbd5e1;
+	padding: 10px 12px;
+	font-weight: 700;
+	color: #475569;
+}
+
+.builder-table td {
+	border-bottom: 1px solid #f1f5f9;
+	padding: 10px 12px;
+	color: #334155;
+}
+
+/* 2. Bottom Operations Control Bar */
+.builder-control-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 12px;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+@media (max-width: 1024px) {
+	.builder-workspace-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.builder-inventory-card,
+	.builder-canvas-card {
+		height: auto;
+		max-height: 400px;
+	}
+}
+
+@media (max-width: 760px) {
+	.builder-control-footer {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
