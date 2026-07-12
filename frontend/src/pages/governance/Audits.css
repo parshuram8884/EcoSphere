@@ -1,0 +1,267 @@
+/* Audits Dashboard stylesheet */
+.audits-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Operational Audit Filter Bar */
+.audits-filter-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.audits-filters-group {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.audits-dropdown {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #334155;
+	outline: none;
+	cursor: pointer;
+}
+
+/* 2. Two-Section Workspace Layout Matrix */
+.audits-workspace-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.audits-card-panel {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.audits-card-panel h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.audits-card-panel p {
+	font-size: 0.78rem;
+	color: #64748b;
+	margin: 2px 0 0 0;
+}
+
+/* Timeline Vertical styling */
+.audits-timeline-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	position: relative;
+	margin-top: 10px;
+	padding-left: 20px;
+}
+
+.audits-timeline-line {
+	position: absolute;
+	left: 28px;
+	top: 10px;
+	bottom: 10px;
+	width: 2px;
+	background: #e2e8f0;
+	z-index: 1;
+}
+
+.audits-timeline-item {
+	display: flex;
+	gap: 16px;
+	position: relative;
+	z-index: 2;
+}
+
+.audits-timeline-node {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 3.5px solid #ffffff;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	margin-top: 4px;
+	flex-shrink: 0;
+}
+
+.node-active { background: #059669; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.2); }
+.node-pending { background: #94a3b8; }
+.node-done { background: #10b981; }
+
+.audits-timeline-details {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 12px 16px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.audits-timeline-title {
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.audits-timeline-desc {
+	font-size: 0.78rem;
+	color: #64748b;
+	line-height: 1.4;
+}
+
+.audits-timeline-date {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #059669;
+}
+
+/* Right Panel: Split Upcoming & Completed */
+.audits-right-split {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.upcoming-audit-card {
+	background: #f8fafc;
+	border: 1.5px solid #cbd5e1;
+	border-radius: 10px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.upcoming-audit-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.upcoming-audit-title {
+	font-size: 0.92rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.upcoming-audit-badge {
+	background: #eff6ff;
+	color: #1d4ed8;
+	font-size: 0.64rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.upcoming-audit-meta {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	font-size: 0.78rem;
+	color: #475569;
+}
+
+.upcoming-audit-label {
+	font-size: 0.62rem;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+}
+
+.upcoming-audit-val {
+	font-weight: 600;
+	color: #1e293b;
+}
+
+/* Completed History Log */
+.completed-history-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	font-size: 0.78rem;
+}
+
+.completed-history-table th {
+	border-bottom: 1.5px solid #e2e8f0;
+	padding: 8px 10px;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	font-size: 0.64rem;
+}
+
+.completed-history-table td {
+	border-bottom: 1px solid #f1f5f9;
+	padding: 10px;
+	color: #334155;
+}
+
+.download-report-link {
+	color: #059669;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* 3. Corporate Audit Calendar Component */
+.audits-calendar-section {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.audits-calendar-section h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+@media (max-width: 1024px) {
+	.audits-workspace-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.audits-filter-bar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.audits-filters-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
