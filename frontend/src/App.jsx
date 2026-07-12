@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
@@ -41,52 +42,56 @@ import Achievements from './pages/profile/Achievements.jsx'
 import ProfileRewards from './pages/profile/Rewards.jsx'
 import Security from './pages/profile/Security.jsx'
 import Preferences from './pages/profile/Preferences.jsx'
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/dashboard/overview" element={<OverviewDashboard />} />
-        <Route path="/dashboard/analytics" element={<Analytics />} />
-        <Route path="/dashboard/department-ranking" element={<DepartmentRanking />} />
-        <Route path="/dashboard/activity-feed" element={<ActivityFeed />} />
-        <Route path="/dashboard/notifications" element={<Notifications />} />
-        <Route path="/environmental/dashboard" element={<EnvironmentalDashboard />} />
-        <Route path="/environmental/carbon-transactions" element={<CarbonTransactions />} />
-        <Route path="/environmental/emission-factors" element={<EmissionFactors />} />
-        <Route path="/environmental/environmental-goals" element={<EnvironmentalGoals />} />
-        <Route path="/environmental/product-esg" element={<ProductESG />} />
-        <Route path="/social/csr-activities" element={<CSRActivities />} />
-        <Route path="/social/employee-participation" element={<EmployeeParticipation />} />
-        <Route path="/social/diversity-metrics" element={<DiversityMetrics />} />
-        <Route path="/social/training" element={<Training />} />
-        <Route path="/governance/policies" element={<Policies />} />
-        <Route path="/governance/policy-acknowledgements" element={<PolicyAcknowledgements />} />
-        <Route path="/governance/audits" element={<Audits />} />
-        <Route path="/governance/compliance-issues" element={<ComplianceIssues />} />
-        <Route path="/gamification/challenges" element={<Challenges />} />
-        <Route path="/gamification/challenge-participation" element={<ChallengeParticipation />} />
-        <Route path="/gamification/badges" element={<Badges />} />
-        <Route path="/gamification/rewards" element={<Rewards />} />
-        <Route path="/gamification/leaderboard" element={<Leaderboard />} />
-        <Route path="/reports/environmental-report" element={<EnvironmentalReport />} />
-        <Route path="/reports/social-report" element={<SocialReport />} />
-        <Route path="/reports/governance-report" element={<GovernanceReport />} />
-        <Route path="/reports/esg-summary" element={<ESGSummary />} />
-        <Route path="/reports/custom-report-builder" element={<CustomReportBuilder />} />
-        <Route path="/administration/users" element={<Users />} />
-        <Route path="/administration/departments" element={<Departments />} />
-        <Route path="/administration/categories" element={<Categories />} />
-        <Route path="/administration/esg-settings" element={<ESGSettings />} />
-        <Route path="/administration/notification-settings" element={<NotificationSettings />} />
-        <Route path="/administration/feature-toggles" element={<FeatureToggles />} />
-        <Route path="/profile/overview" element={<ProfileOverview />} />
-        <Route path="/profile/achievements" element={<Achievements />} />
-        <Route path="/profile/rewards" element={<ProfileRewards />} />
-        <Route path="/profile/security" element={<Security />} />
-        <Route path="/profile/preferences" element={<Preferences />} />
+
+        {/* Protected routes */}
+        <Route path="/dashboard/overview" element={<ProtectedRoute><OverviewDashboard /></ProtectedRoute>} />
+        <Route path="/dashboard/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+        <Route path="/dashboard/department-ranking" element={<ProtectedRoute><DepartmentRanking /></ProtectedRoute>} />
+        <Route path="/dashboard/activity-feed" element={<ProtectedRoute><ActivityFeed /></ProtectedRoute>} />
+        <Route path="/dashboard/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+        <Route path="/environmental/dashboard" element={<ProtectedRoute><EnvironmentalDashboard /></ProtectedRoute>} />
+        <Route path="/environmental/carbon-transactions" element={<ProtectedRoute><CarbonTransactions /></ProtectedRoute>} />
+        <Route path="/environmental/emission-factors" element={<ProtectedRoute><EmissionFactors /></ProtectedRoute>} />
+        <Route path="/environmental/environmental-goals" element={<ProtectedRoute><EnvironmentalGoals /></ProtectedRoute>} />
+        <Route path="/environmental/product-esg" element={<ProtectedRoute><ProductESG /></ProtectedRoute>} />
+        <Route path="/social/csr-activities" element={<ProtectedRoute><CSRActivities /></ProtectedRoute>} />
+        <Route path="/social/employee-participation" element={<ProtectedRoute><EmployeeParticipation /></ProtectedRoute>} />
+        <Route path="/social/diversity-metrics" element={<ProtectedRoute><DiversityMetrics /></ProtectedRoute>} />
+        <Route path="/social/training" element={<ProtectedRoute><Training /></ProtectedRoute>} />
+        <Route path="/governance/policies" element={<ProtectedRoute><Policies /></ProtectedRoute>} />
+        <Route path="/governance/policy-acknowledgements" element={<ProtectedRoute><PolicyAcknowledgements /></ProtectedRoute>} />
+        <Route path="/governance/audits" element={<ProtectedRoute><Audits /></ProtectedRoute>} />
+        <Route path="/governance/compliance-issues" element={<ProtectedRoute><ComplianceIssues /></ProtectedRoute>} />
+        <Route path="/gamification/challenges" element={<ProtectedRoute><Challenges /></ProtectedRoute>} />
+        <Route path="/gamification/challenge-participation" element={<ProtectedRoute><ChallengeParticipation /></ProtectedRoute>} />
+        <Route path="/gamification/badges" element={<ProtectedRoute><Badges /></ProtectedRoute>} />
+        <Route path="/gamification/rewards" element={<ProtectedRoute><Rewards /></ProtectedRoute>} />
+        <Route path="/gamification/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+        <Route path="/reports/environmental-report" element={<ProtectedRoute><EnvironmentalReport /></ProtectedRoute>} />
+        <Route path="/reports/social-report" element={<ProtectedRoute><SocialReport /></ProtectedRoute>} />
+        <Route path="/reports/governance-report" element={<ProtectedRoute><GovernanceReport /></ProtectedRoute>} />
+        <Route path="/reports/esg-summary" element={<ProtectedRoute><ESGSummary /></ProtectedRoute>} />
+        <Route path="/reports/custom-report-builder" element={<ProtectedRoute><CustomReportBuilder /></ProtectedRoute>} />
+        <Route path="/administration/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/administration/departments" element={<ProtectedRoute><Departments /></ProtectedRoute>} />
+        <Route path="/administration/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+        <Route path="/administration/esg-settings" element={<ProtectedRoute><ESGSettings /></ProtectedRoute>} />
+        <Route path="/administration/notification-settings" element={<ProtectedRoute><NotificationSettings /></ProtectedRoute>} />
+        <Route path="/administration/feature-toggles" element={<ProtectedRoute><FeatureToggles /></ProtectedRoute>} />
+        <Route path="/profile/overview" element={<ProtectedRoute><ProfileOverview /></ProtectedRoute>} />
+        <Route path="/profile/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
+        <Route path="/profile/rewards" element={<ProtectedRoute><ProfileRewards /></ProtectedRoute>} />
+        <Route path="/profile/security" element={<ProtectedRoute><Security /></ProtectedRoute>} />
+        <Route path="/profile/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )
