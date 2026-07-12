@@ -1,0 +1,219 @@
+/* Social Reports dashboard stylesheet */
+.soc-rep-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Executive Social Metrics Ledger */
+.soc-rep-metrics-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.soc-rep-metric-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.soc-rep-metric-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: #ecfdf5;
+	color: #059669;
+	display: grid;
+	place-items: center;
+	font-size: 1.25rem;
+}
+
+.soc-rep-metric-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.soc-rep-metric-label {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.soc-rep-metric-val {
+	font-size: 1.3rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.soc-rep-metric-sub {
+	font-size: 0.72rem;
+	color: #059669;
+	font-weight: 600;
+}
+
+/* 2. Reporting Focus Toolbar */
+.soc-rep-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.soc-rep-btn-export {
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.soc-rep-btn-export:hover {
+	background: #065f46;
+}
+
+/* 3. Multi-Quadrant Analytics Grid */
+.soc-rep-quad-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.soc-rep-card-panel {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.soc-rep-card-panel h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.soc-rep-card-panel p {
+	font-size: 0.78rem;
+	color: #64748b;
+	margin: 2px 0 0 0;
+}
+
+/* Grouped vertical bars graphic */
+.grouped-bars-container {
+	height: 140px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-around;
+	border-bottom: 2px solid #cbd5e1;
+	padding-bottom: 8px;
+}
+
+.grouped-bar-set {
+	display: flex;
+	gap: 4px;
+	align-items: flex-end;
+	height: 100%;
+}
+
+.bar-vol-hours {
+	width: 14px;
+	background: #059669;
+	border-radius: 4px 4px 0 0;
+}
+
+.bar-emp-reg {
+	width: 14px;
+	background: #3b82f6;
+	border-radius: 4px 4px 0 0;
+}
+
+/* Funnel chart diagram */
+.funnel-container {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: center;
+	padding: 10px 0;
+}
+
+.funnel-stage {
+	height: 28px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffffff;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+/* Diversity breakdown metrics matrix */
+.diversity-split-box {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.diversity-row-item {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.diversity-row-label {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #334155;
+}
+
+.diversity-split-bar {
+	height: 12px;
+	display: flex;
+	border-radius: 99px;
+	overflow: hidden;
+}
+
+.split-part {
+	height: 100%;
+}
+
+@media (max-width: 1024px) {
+	.soc-rep-quad-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.soc-rep-metrics-row {
+		grid-template-columns: 1fr;
+	}
+
+	.soc-rep-toolbar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}

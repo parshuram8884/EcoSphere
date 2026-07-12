@@ -7,6 +7,7 @@ import EnvironmentalLayout from './pages/environmental/EnvironmentalLayout.jsx'
 import SocialLayout from './pages/social/SocialLayout.jsx'
 import GovernanceLayout from './pages/governance/GovernanceLayout.jsx'
 import GamificationLayout from './pages/gamification/GamificationLayout.jsx'
+import ReportsLayout from './pages/reports/ReportsLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -86,11 +87,13 @@ function App() {
           <Route path="rewards" element={<Rewards />} />
           <Route path="leaderboard" element={<Leaderboard />} />
         </Route>
-        <Route path="/reports/environmental-report" element={<EnvironmentalReport />} />
-        <Route path="/reports/social-report" element={<SocialReport />} />
-        <Route path="/reports/governance-report" element={<GovernanceReport />} />
-        <Route path="/reports/esg-summary" element={<ESGSummary />} />
-        <Route path="/reports/custom-report-builder" element={<CustomReportBuilder />} />
+        <Route path="/reports" element={<ReportsLayout />}>
+          <Route path="environmental-report" element={<EnvironmentalReport />} />
+          <Route path="social-report" element={<SocialReport />} />
+          <Route path="governance-report" element={<GovernanceReport />} />
+          <Route path="esg-summary" element={<ESGSummary />} />
+          <Route path="custom-report-builder" element={<CustomReportBuilder />} />
+        </Route>
         <Route path="/administration/users" element={<Users />} />
         <Route path="/administration/departments" element={<Departments />} />
         <Route path="/administration/categories" element={<Categories />} />
