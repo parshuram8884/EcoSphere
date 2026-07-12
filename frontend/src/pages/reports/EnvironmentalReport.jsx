@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './EnvironmentalReport.css'
+import { downloadReport } from '../../services/api'
 
 export default function EnvironmentalReport() {
   const [fiscalYear, setFiscalYear] = useState('FY 2024')
@@ -13,13 +14,15 @@ export default function EnvironmentalReport() {
     { cat: 'Scope 3: Business Travel', coeff: 'Flight EPA (0.150 kg CO₂e / pkm)', savings: '$2,100', conf: 'Medium' }
   ]
 
-  const handleDownload = (format) => {
-    alert(`Initiating download for Environmental Compliance Report in ${format} format...`)
+  const handleDownload = async (format) => {
+    const fmtMap = { PDF: 'pdf', Excel: 'excel', CSV: 'csv' }
+    const r = await downloadReport('environmental', fmtMap[format] || 'pdf')
+    if (!r.ok) alert('Export failed: ' + r.message)
     setIsExportOpen(false)
   }
 
   const handlePrint = () => {
-    alert('Simulating Print Preview: Compiling layout coordinates for printer output...')
+    handleDownload('PDF')
   }
 
   return (

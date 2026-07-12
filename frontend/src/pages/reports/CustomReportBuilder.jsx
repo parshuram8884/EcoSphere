@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { downloadReport } from '../../services/api'
 import './CustomReportBuilder.css'
 
 export default function CustomReportBuilder() {
@@ -185,14 +186,28 @@ export default function CustomReportBuilder() {
           className="env-btn-secondary"
           onClick={handleSaveBlueprint}
         >
-          💾 Save Custom Report Blueprint Template
+          💾 Save Custom Blueprint
         </button>
         <button 
           type="button" 
           className="env-btn-primary"
-          onClick={handleCompileDocument}
+          onClick={() => downloadReport('custom', 'pdf')}
         >
-          ⚙️ Compile & Export Custom Document Archive
+          🖨️ Print Preview (PDF)
+        </button>
+        <button 
+          type="button" 
+          className="env-btn-primary"
+          onClick={() => downloadReport('custom', 'excel')}
+        >
+          📊 Download Excel
+        </button>
+        <button 
+          type="button" 
+          className="env-btn-primary"
+          onClick={() => downloadReport('custom', 'csv')}
+        >
+          📑 Download CSV
         </button>
       </article>
     </div>

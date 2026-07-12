@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './Analytics.css'
 import { useApi } from '../../hooks/useApi'
+import { downloadReport } from '../../services/api'
 
 export default function Analytics() {
   const [reportingYear, setReportingYear] = useState('FY 2024 [Current]')
@@ -65,7 +66,10 @@ export default function Analytics() {
           </div>
         </div>
 
-        <button type="button" className="analytics-export-btn">
+        <button type="button" className="analytics-export-btn" onClick={async () => {
+          const r = await downloadReport('analytics', 'pdf')
+          if (!r.ok) alert('Export failed: ' + r.message)
+        }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
           </svg>
