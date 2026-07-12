@@ -1,20 +1,7 @@
 import { useState } from 'react'
 import './Overview.css'
-import {Link } from "react-router-dom"
-
-const summaryCards = [
-  { label: 'Overall ESG', value: '84', delta: '+4.3%', tone: 'green' },
-  { label: 'Environmental', value: '79', delta: '+2.1%', tone: 'teal' },
-  { label: 'Social', value: '88', delta: '+5.8%', tone: 'blue' },
-  { label: 'Governance', value: '85', delta: '+3.4%', tone: 'amber' },
-]
-
-const departments = [
-  { name: 'R&D', score: '93%', color: 'green' },
-  { name: 'Operations', score: '84%', color: 'blue' },
-  { name: 'HR', score: '89%', color: 'teal' },
-  { name: 'Logistics', score: '76%', color: 'amber' },
-]
+import { Link } from "react-router-dom"
+import { useApi } from '../../hooks/useApi'
 
 const complianceGrid = [
   { label: 'ISO', state: 'ok' },
@@ -28,6 +15,26 @@ const complianceGrid = [
 ]
 
 export default function Overview() {
+  const { data, loading, error } = useApi('/dashboard/overview/')
+
+  if (loading) return <div style={{ padding: 20 }}>Loading dashboard data...</div>
+  if (error) return <div style={{ padding: 20, color: 'red' }}>Error loading dashboard: {error}</div>
+  if (!data) return null
+
+  const summaryCards = [
+    { label: 'Overall ESG', value: data.overall_esg.value, delta: data.overall_esg.delta, tone: 'green' },
+    { label: 'Environmental', value: data.environmental.value, delta: data.environmental.delta, tone: 'teal' },
+    { label: 'Social', value: data.social.value, delta: data.social.delta, tone: 'blue' },
+    { label: 'Governance', value: data.governance.value, delta: data.governance.delta, tone: 'amber' },
+  ]
+
+  const getTone = (score) => {
+    if (score >= 90) return 'green'
+    if (score >= 80) return 'teal'
+    if (score >= 70) return 'blue'
+    return 'amber'
+  }
+
   return (
     <>
       <section className="overview-grid-top" aria-label="Key metrics">
@@ -89,14 +96,14 @@ export default function Overview() {
 
               <div className="overview-gauge">
                 <div className="overview-gauge-center">
-                  <strong>76%</strong>
+                  <strong>{data.csr_participation_pct}%</strong>
                   <span>Active Members</span>
                 </div>
               </div>
 
               <div className="overview-gauge-meta">
                 <span>Internal target 80%</span>
-                <span>Target + 15%</span>
+                <span>{data.csr_participation_pct >= 80 ? 'Target Achieved' : 'Below Target'}</span>
               </div>
             </article>
 
@@ -104,7 +111,7 @@ export default function Overview() {
               <div className="overview-panel-header">
                 <div>
                   <h2>Compliance Grid</h2>
-                  <p>Quick visibility into controls and status flags.</p>
+                  <p>Open Issues: {data.compliance_summary.open} | Resolved: {data.compliance_summary.resolved}</p>
                 </div>
               </div>
 
@@ -116,7 +123,7 @@ export default function Overview() {
                 ))}
               </div>
 
-              <p className="overview-panel-note">All dashboards are refreshed every 4 days.</p>
+              <p className="overview-panel-note">All dashboards are refreshed dynamically.</p>
             </article>
           </aside>
         </section>
@@ -131,17 +138,17 @@ export default function Overview() {
             </div>
 
             <div className="overview-department-grid">
-              {departments.map((department) => (
+              {data.departments.map((department) => (
                 <div key={department.name} className="department-card">
                   <div className="department-card-header">
                     <span>{department.name}</span>
                     <strong>{department.score}</strong>
                   </div>
                   <div className="department-bars">
-                    <span className={`department-bar tone-${department.color}`} />
-                    <span className={`department-bar tone-${department.color}`} />
-                    <span className={`department-bar tone-${department.color}`} />
-                    <span className={`department-bar tone-${department.color}`} />
+                    <span className={`department-bar tone-${getTone(department.score)}`} />
+                    <span className={`department-bar tone-${getTone(department.env)}`} />
+                    <span className={`department-bar tone-${getTone(department.social)}`} />
+                    <span className={`department-bar tone-${getTone(department.gov)}`} />
                   </div>
                 </div>
               ))}
@@ -158,10 +165,12 @@ export default function Overview() {
               </div>
 
               <ul className="overview-list">
-                <li>Judgement audit completed for Q4 review.</li>
-                <li>GHG Scope 2 data pipeline processed.</li>
-                <li>Training completion coverage reached 96%.</li>
-                <li>Supplier review passed for 42 vendors.</li>
+                {data.recent_activities.map((act, index) => (
+                  <li key={index}>{act.message}</li>
+                ))}
+                {data.recent_activities.length === 0 && (
+                  <li>No recent activity.</li>
+                )}
               </ul>
             </article>
 
@@ -194,4 +203,4 @@ export default function Overview() {
         </section>
       </>
     )
-  }
+}

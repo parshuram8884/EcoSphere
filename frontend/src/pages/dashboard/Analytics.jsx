@@ -1,10 +1,20 @@
 import { useState } from 'react'
 import './Analytics.css'
+import { useApi } from '../../hooks/useApi'
 
 export default function Analytics() {
   const [reportingYear, setReportingYear] = useState('FY 2024 [Current]')
   const [scopeVariant, setScopeVariant] = useState('All Scopes [1, 2, 3]')
   const [location, setLocation] = useState('Global Operations')
+
+  const { data, loading, error } = useApi('/dashboard/analytics/')
+
+  if (loading) return <div style={{ padding: 20 }}>Loading analytics...</div>
+  if (error) return <div style={{ padding: 20, color: 'red' }}>Error: {error}</div>
+  if (!data) return null
+
+  // Calculate top sources from breakdown
+  const topSources = data.source_breakdown.slice(0, 4)
 
   return (
     <>
@@ -70,7 +80,7 @@ export default function Analytics() {
           <div className="analytics-card-header analytics-trends-header">
             <div>
               <h3>Carbon Trends & Offsets</h3>
-              <p>Gross emissions vs. carbon credit sequestration curve</p>
+              <p>Gross emissions vs. carbon credit sequestration curve. Total: {data.total_emissions.toLocaleString()} tCO2e</p>
             </div>
             <div className="analytics-legend">
               <span className="analytics-legend-item">
@@ -187,63 +197,32 @@ export default function Analytics() {
           </div>
         </article>
 
-        {/* Chart 3: Departmental ESG Distribution */}
+        {/* Chart 3: Source Emissions Distribution */}
         <article className="analytics-card analytics-dept-card">
           <div className="analytics-card-header analytics-dept-header-wrap">
             <div>
-              <h3>Departmental ESG Distribution</h3>
-              <p>Environmental vs. Social performance comparison across core units</p>
-            </div>
-            <div className="analytics-legend">
-              <span className="analytics-legend-item">
-                <span className="legend-dot-gross"></span> Environmental Pillar
-              </span>
-              <span className="analytics-legend-item">
-                <span className="legend-dot-soc"></span> Social & Governance Pillar
-              </span>
+              <h3>Emission Source Distribution</h3>
+              <p>Top emission sources by volume.</p>
             </div>
           </div>
 
           <div className="analytics-dept-chart">
-            {/* Operations */}
-            <div className="analytics-dept-group">
-              <div className="analytics-dept-bars-pair">
-                <div className="analytics-dept-bar analytics-dept-bar-env" style={{ height: '80%' }} data-value="80%"></div>
-                <div className="analytics-dept-bar analytics-dept-bar-soc" style={{ height: '40%' }} data-value="40%"></div>
-              </div>
-              <div className="analytics-dept-name">Operations</div>
-            </div>
-
-            {/* R&D */}
-            <div className="analytics-dept-group">
-              <div className="analytics-dept-bars-pair">
-                <div className="analytics-dept-bar analytics-dept-bar-env" style={{ height: '60%' }} data-value="60%"></div>
-                <div className="analytics-dept-bar analytics-dept-bar-soc" style={{ height: '85%' }} data-value="85%"></div>
-              </div>
-              <div className="analytics-dept-name">R&D</div>
-            </div>
-
-            {/* Supply Chain */}
-            <div className="analytics-dept-group">
-              <div className="analytics-dept-bars-pair">
-                <div className="analytics-dept-bar analytics-dept-bar-env" style={{ height: '50%' }} data-value="50%"></div>
-                <div className="analytics-dept-bar analytics-dept-bar-soc" style={{ height: '55%' }} data-value="55%"></div>
-              </div>
-              <div className="analytics-dept-name">Supply Chain</div>
-            </div>
-
-            {/* HR & Legal */}
-            <div className="analytics-dept-group">
-              <div className="analytics-dept-bars-pair">
-                <div className="analytics-dept-bar analytics-dept-bar-env" style={{ height: '30%' }} data-value="30%"></div>
-                <div className="analytics-dept-bar analytics-dept-bar-soc" style={{ height: '90%' }} data-value="90%"></div>
-              </div>
-              <div className="analytics-dept-name">HR & Legal</div>
-            </div>
+            {topSources.map((source, idx) => {
+               // Calculate a rough percentage for bar height
+               const height = Math.min(100, Math.max(10, (source.total / (data.total_emissions || 1)) * 100 * 2))
+               return (
+                <div key={idx} className="analytics-dept-group">
+                  <div className="analytics-dept-bars-pair">
+                    <div className="analytics-dept-bar analytics-dept-bar-env" style={{ height: `${height}%` }} data-value={`${Math.round(source.total)}t`}></div>
+                  </div>
+                  <div className="analytics-dept-name" style={{ textTransform: 'capitalize' }}>{source.source}</div>
+                </div>
+               )
+            })}
+            {topSources.length === 0 && <p>No data available</p>}
           </div>
         </article>
       </div>
     </>
   )
 }
-

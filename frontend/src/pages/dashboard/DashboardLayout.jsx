@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../../components/navbar/Navbar.jsx'
-import { useAuth } from '../../context/AuthContext'
 import './DashboardLayout.css'
 
 export default function DashboardLayout() {
@@ -15,10 +14,9 @@ export default function DashboardLayout() {
 
   // Customize header/sidebar content slightly based on route (optional details from screenshot)
   const isOverviewOrAnalytics = location.pathname.includes('overview') || location.pathname.includes('analytics')
-  const { user: authUser } = useAuth()
   const user = {
-    name: authUser ? (`${authUser.first_name} ${authUser.last_name}`.trim() || authUser.username) : 'User',
-    role: authUser?.role || 'Employee',
+    name: 'Marcus Thome',
+    role: 'Sustainability Lead',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
     goalPct: 78,
     goalText: 'of Net Zero Target reached'

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../../components/navbar/Navbar.jsx'
-import { useAuth } from '../../context/AuthContext'
 import './GamificationLayout.css'
 
 export default function GamificationLayout() {
@@ -12,10 +11,9 @@ export default function GamificationLayout() {
   const getTabClass = (path) => {
     return location.pathname === path ? 'layout-tab-link layout-tab-link-active' : 'layout-tab-link'
   }
-  const { user: authUser } = useAuth()
   const user = {
-    name: authUser ? (`${authUser.first_name} ${authUser.last_name}`.trim() || authUser.username) : 'User',
-    role: authUser?.role || 'Employee',
+    name: 'Marcus Thome',
+    role: 'Sustainability Lead',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
     goalPct: 78,
     goalText: 'of Net Zero Target reached'

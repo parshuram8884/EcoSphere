@@ -203,6 +203,14 @@ Drives employee engagement by turning sustainable behaviour into a rewarding, ga
 
 **Core Django Models:** `Challenge`, `ChallengeParticipation`, `Badge`, `Reward`, `RewardRedemption`
 
+### 4.4.1 Challenge Lifecycle State Machine
+
+- **Draft:** Created by ESG Manager/Admin; not visible to employees.
+- **Active:** Published and open for employee enrollment and proof submission.
+- **Under Review:** Challenge deadline has passed or maximum capacity reached; pending submission approvals.
+- **Completed:** Fully evaluated, XP distributed, and archived into past activity logs.
+- **Archived:** Can be triggered from **any state** to immediately deprecate the challenge without deleting underlying historical data.
+
 ### 4.5 Dashboard & Scoring Engine
 
 The aggregation layer that turns raw transactional data from the three pillars into scores decision-makers can act on.
@@ -214,6 +222,14 @@ The aggregation layer that turns raw transactional data from the three pillars i
 - Department ESG rankings and smart visualizations (trend lines, radar charts for the 3 pillars, leaderboard widgets)
 
 **Core Django Models:** `DepartmentScore` (Department, Environmental Score, Social Score, Governance Score, Total Score)
+
+### 4.5.1 ESG Calculation Formula
+
+$$\text{Department Total Score} = (S_E \times W_E) + (S_S \times W_S) + (S_G \times W_G)$$
+
+*   $S_E, S_S, S_G$: Aggregated scores (0–100) calculated from Environmental, Social, and Governance transactional indicators respectively.
+*   $W_E, W_S, W_G$: Configurable pillar weights stored in `ESGConfiguration` (Default: $W_E = 0.40$, $W_S = 0.30$, $W_G = 0.30$).
+*   **Overall ESG Score:** The weighted average of all active `DepartmentTotalScore` values across the organization.
 
 ### 4.6 Reports Module
 
@@ -350,6 +366,8 @@ EcoSphere generates the following reports, each downloadable as PDF, Excel, or C
 - Migration path from SQLite to PostgreSQL for production scaling
 - Celery + Redis for asynchronous email notifications and scheduled score recalculation
 
+### 9.1 Visual Architecture & Mockup Reference
+- Interactive Wireframe Mockup: [EcoSphere Excalidraw Mockup](https://link.excalidraw.com/I/65VNwvy7c4X/2m6lz9Ln4)
 ---
 
 ## 10. Summary
