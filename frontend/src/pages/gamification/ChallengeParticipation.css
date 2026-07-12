@@ -429,3 +429,46 @@
 		justify-content: center;
 	}
 }
+
+/* ── Shared Utility Styles ── */
+.loading-state {
+	padding: 60px 20px;
+	text-align: center;
+	color: #64748b;
+	font-size: 1rem;
+}
+
+.empty-state-inline {
+	padding: 20px;
+	text-align: center;
+	color: #94a3b8;
+	font-size: 0.85rem;
+}
+
+.chal-part-btn-reject:disabled,
+.chal-part-btn-approve:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.chal-part-btn-reject:disabled:hover {
+	background: #ffffff;
+	border-color: #fca5a5;
+	color: #ef4444;
+}
+
+.chal-part-btn-approve:disabled:hover {
+	background: #064e3b;
+}
+
+.status-pending {
+	color: #d97706 !important;
+}
+
+.status-approved {
+	color: #059669 !important;
+}
+
+.status-rejected {
+	color: #ef4444 !important;
+}

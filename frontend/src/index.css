@@ -809,3 +809,33 @@ input {
 		grid-template-columns: 1fr;
 	}
 }
+
+/* ── Navbar Logout Button ── */
+.layout-nav-divider {
+	height: 1px;
+	background: rgba(167, 243, 208, 0.12);
+	margin: 4px 8px;
+}
+
+.layout-logout-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: transparent;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 0.92rem;
+	font-weight: 500;
+	color: #fca5a5;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	width: 100%;
+	text-align: left;
+	font-family: inherit;
+}
+
+.layout-logout-btn:hover {
+	color: #fef2f2;
+	background: rgba(239, 68, 68, 0.15);
+}
