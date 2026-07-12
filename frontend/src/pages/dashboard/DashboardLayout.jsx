@@ -15,13 +15,11 @@ export default function DashboardLayout() {
   // Customize header/sidebar content slightly based on route (optional details from screenshot)
   const isOverviewOrAnalytics = location.pathname.includes('overview') || location.pathname.includes('analytics')
   const user = {
-    name: isOverviewOrAnalytics ? 'Marcus Thome' : 'Alex Rivera',
-    role: isOverviewOrAnalytics ? 'Sustainability Lead' : 'SG&C Lead',
-    avatar: isOverviewOrAnalytics 
-      ? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80'
-      : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&fit=crop&q=80',
-    goalPct: isOverviewOrAnalytics ? 82 : 78,
-    goalText: isOverviewOrAnalytics ? 'Carbon Offset' : 'of Net Zero Target'
+    name: 'Marcus Thome',
+    role: 'Sustainability Lead',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
+    goalPct: 78,
+    goalText: 'of Net Zero Target'
   }
 
   return (

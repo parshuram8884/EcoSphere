@@ -13,11 +13,11 @@ export default function SocialLayout() {
   }
 
   const user = {
-    name: 'Sarah Chen',
-    role: 'HR Director',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&fit=crop&q=80',
-    goalPct: 74,
-    goalText: 'Engagement Rate'
+    name: 'Marcus Thome',
+    role: 'Sustainability Lead',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
+    goalPct: 78,
+    goalText: 'of Net Zero Target'
   }
 
   return (
