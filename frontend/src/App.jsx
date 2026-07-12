@@ -5,6 +5,7 @@ import Register from './pages/auth/Register.jsx'
 import DashboardLayout from './pages/dashboard/DashboardLayout.jsx'
 import EnvironmentalLayout from './pages/environmental/EnvironmentalLayout.jsx'
 import SocialLayout from './pages/social/SocialLayout.jsx'
+import GovernanceLayout from './pages/governance/GovernanceLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -71,10 +72,12 @@ function App() {
           <Route path="diversity-metrics" element={<DiversityMetrics />} />
           <Route path="training" element={<Training />} />
         </Route>
-        <Route path="/governance/policies" element={<Policies />} />
-        <Route path="/governance/policy-acknowledgements" element={<PolicyAcknowledgements />} />
-        <Route path="/governance/audits" element={<Audits />} />
-        <Route path="/governance/compliance-issues" element={<ComplianceIssues />} />
+        <Route path="/governance" element={<GovernanceLayout />}>
+          <Route path="policies" element={<Policies />} />
+          <Route path="policy-acknowledgements" element={<PolicyAcknowledgements />} />
+          <Route path="audits" element={<Audits />} />
+          <Route path="compliance-issues" element={<ComplianceIssues />} />
+        </Route>
         <Route path="/gamification/challenges" element={<Challenges />} />
         <Route path="/gamification/challenge-participation" element={<ChallengeParticipation />} />
         <Route path="/gamification/badges" element={<Badges />} />
