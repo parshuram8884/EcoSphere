@@ -14,10 +14,10 @@ export default function ReportsLayout() {
 
   const user = {
     name: 'Marcus Thome',
-    role: 'Reporting Lead',
+    role: 'Sustainability Lead',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
-    goalPct: 95,
-    goalText: 'Report Accuracy'
+    goalPct: 78,
+    goalText: 'of Net Zero Target'
   }
 
   return (
