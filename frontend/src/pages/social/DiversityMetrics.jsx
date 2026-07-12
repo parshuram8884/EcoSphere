@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './DiversityMetrics.css'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function DiversityMetrics() {
   const [region, setRegion] = useState('Global')
@@ -62,9 +63,31 @@ export default function DiversityMetrics() {
         </div>
 
         <div className="diversity-toolbar-actions">
-          <button type="button" className="env-btn-primary">
-            Export Analytics
-          </button>
+          <div className="diversity-export-group">
+            <button type="button" className="env-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'name', label: 'Department' },
+                { key: 'female', label: 'Female (%)' },
+                { key: 'male', label: 'Male (%)' },
+                { key: 'nonBinary', label: 'Non-Binary (%)' },
+              ]
+              exportToCSV(departmentData, cols, 'Diversity_Metrics')
+            }}>📥 CSV</button>
+            <button type="button" className="env-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'name', label: 'Department' },
+                { key: 'female', label: 'Female (%)' },
+                { key: 'male', label: 'Male (%)' },
+                { key: 'nonBinary', label: 'Non-Binary (%)' },
+              ]
+              const meta = [
+                { label: 'Region', value: region },
+                { label: 'Department', value: department },
+                { label: 'Period', value: period },
+              ]
+              exportToPDF('Diversity Metrics Report', meta, departmentData, cols, 'Diversity_Metrics')
+            }}>📄 PDF</button>
+          </div>
         </div>
       </article>
 

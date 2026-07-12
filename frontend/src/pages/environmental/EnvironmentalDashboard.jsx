@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './EnvironmentalDashboard.css'
 import { useApi } from '../../hooks/useApi'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function EnvironmentalDashboard() {
   const [period, setPeriod] = useState('YTD')
@@ -60,6 +61,33 @@ export default function EnvironmentalDashboard() {
           </div>
         </article>
       </section>
+
+      {/* Export Toolbar */}
+      <div className="env-export-toolbar">
+        <span className="env-export-label">Export Report:</span>
+        <button type="button" className="env-btn-primary" onClick={() => {
+          if (!data || !data.breakdown) return
+          const cols = [
+            { key: 'name', label: 'Source' },
+            { key: 'value_str', label: 'Value' },
+            { key: 'pct', label: 'Percentage (%)' },
+          ]
+          exportToCSV(data.breakdown, cols, 'Environmental_Dashboard')
+        }}>📥 CSV</button>
+        <button type="button" className="env-btn-primary" onClick={() => {
+          if (!data || !data.breakdown) return
+          const cols = [
+            { key: 'name', label: 'Source' },
+            { key: 'value_str', label: 'Value' },
+            { key: 'pct', label: 'Percentage (%)' },
+          ]
+          const meta = [
+            { label: 'Total Footprint', value: data.total_footprint },
+            { label: 'Health Score', value: String(data.health_score) },
+          ]
+          exportToPDF('Environmental Dashboard Report', meta, data.breakdown, cols, 'Environmental_Dashboard')
+        }}>📄 PDF</button>
+      </div>
 
       {/* 2. Main Analytics Grid */}
       <section className="env-main-grid" aria-label="Detailed Analytics">

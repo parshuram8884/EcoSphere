@@ -780,3 +780,23 @@
 		margin-bottom: 4px;
 	}
 }
+
+/* Export group */
+.analytics-export-group {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.analytics-export-group .analytics-export-btn {
+	font-size: 0.78rem;
+	padding: 8px 14px;
+}
+@media (max-width: 760px) {
+	.analytics-export-group {
+		width: 100%;
+	}
+	.analytics-export-group .analytics-export-btn {
+		flex: 1;
+		justify-content: center;
+	}
+}

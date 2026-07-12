@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './Analytics.css'
 import { useApi } from '../../hooks/useApi'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function Analytics() {
   const [reportingYear, setReportingYear] = useState('FY 2024 [Current]')
@@ -65,12 +66,36 @@ export default function Analytics() {
           </div>
         </div>
 
-        <button type="button" className="analytics-export-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-          </svg>
-          Export Report
-        </button>
+        <div className="analytics-export-group">
+          <button type="button" className="analytics-export-btn" onClick={() => {
+            if (!data || !data.source_breakdown) return
+            const cols = [
+              { key: 'source', label: 'Source' },
+              { key: 'total', label: 'Emissions (tCO2e)' },
+            ]
+            const exportData = data.source_breakdown.map(s => ({
+              source: s.source,
+              total: Math.round(s.total) + ' t'
+            }))
+            exportToCSV(exportData, cols, 'Emissions_Analytics')
+          }}>📥 CSV</button>
+          <button type="button" className="analytics-export-btn" onClick={() => {
+            if (!data || !data.source_breakdown) return
+            const cols = [
+              { key: 'source', label: 'Source' },
+              { key: 'total', label: 'Emissions (tCO2e)' },
+            ]
+            const exportData = data.source_breakdown.map(s => ({
+              source: s.source,
+              total: Math.round(s.total) + ' t'
+            }))
+            const meta = [
+              { label: 'Total Emissions', value: data.total_emissions.toLocaleString() + ' tCO2e' },
+              { label: 'Source Count', value: String(data.source_breakdown.length) },
+            ]
+            exportToPDF('Emissions Analytics Report', meta, exportData, cols, 'Emissions_Analytics')
+          }}>📄 PDF</button>
+        </div>
       </div>
 
       {/* Dashboard Grid */}

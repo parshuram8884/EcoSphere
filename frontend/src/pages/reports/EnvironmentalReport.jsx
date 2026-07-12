@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './EnvironmentalReport.css'
+import { exportToCSV, exportToPDF, exportToExcel } from '../../utils/exportUtils'
 
 export default function EnvironmentalReport() {
   const [fiscalYear, setFiscalYear] = useState('FY 2024')
@@ -14,7 +15,24 @@ export default function EnvironmentalReport() {
   ]
 
   const handleDownload = (format) => {
-    alert(`Initiating download for Environmental Compliance Report in ${format} format...`)
+    const cols = [
+      { key: 'cat', label: 'Emission Category' },
+      { key: 'coeff', label: 'Coefficient Mapped' },
+      { key: 'savings', label: 'Direct Costs Saved' },
+      { key: 'conf', label: 'Confidence Rating' },
+    ]
+    if (format === 'CSV') {
+      exportToCSV(balanceSheet, cols, 'Environmental_Report')
+    } else if (format === 'Excel') {
+      exportToExcel(balanceSheet, cols, 'Environmental_Report')
+    } else {
+      const meta = [
+        { label: 'Fiscal Year', value: fiscalYear },
+        { label: 'Scope', value: scope },
+        { label: 'Standard', value: standard },
+      ]
+      exportToPDF('Environmental Compliance Report', meta, balanceSheet, cols, 'Environmental_Report')
+    }
     setIsExportOpen(false)
   }
 

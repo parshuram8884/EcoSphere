@@ -584,3 +584,23 @@
 		align-items: stretch;
 	}
 }
+
+/* Export group */
+.goals-export-group {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.goals-export-group .env-btn-primary {
+	font-size: 0.78rem;
+	padding: 6px 14px;
+}
+@media (max-width: 760px) {
+	.goals-export-group {
+		flex-direction: column;
+		width: 100%;
+	}
+	.goals-export-group .env-btn-primary {
+		width: 100%;
+	}
+}

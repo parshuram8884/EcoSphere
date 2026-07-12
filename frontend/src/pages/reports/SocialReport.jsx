@@ -1,11 +1,30 @@
 import { useState } from 'react'
 import './SocialReport.css'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function SocialReport() {
   const [pillar, setPillar] = useState('All')
 
-  const handleExportBriefing = () => {
-    alert('Simulating Document Export: Compiling consolidated Social brief containing CSR returns and safety rates...')
+  const handleExportBriefing = (format) => {
+    const metricsData = [
+      { metric: 'CSR Social Capital Return', value: '$1.24 Impact', sub: 'Per Dollar Invested' },
+      { metric: 'Safety Incident Rate Index', value: '0.02 TRIR', sub: 'Compliance Baseline Met' },
+      { metric: 'DEI Representation Score', value: '89.4% Value', sub: 'YoY progress index' },
+    ]
+    const cols = [
+      { key: 'metric', label: 'Metric' },
+      { key: 'value', label: 'Value' },
+      { key: 'sub', label: 'Details' },
+    ]
+    if (format === 'csv') {
+      exportToCSV(metricsData, cols, 'Social_Report')
+    } else {
+      const meta = [
+        { label: 'Filter', value: pillar },
+        { label: 'Export Date', value: new Date().toLocaleDateString() },
+      ]
+      exportToPDF('Social Report Briefing', meta, metricsData, cols, 'Social_Report')
+    }
   }
 
   return (
@@ -56,13 +75,22 @@ export default function SocialReport() {
           <option value="Training">Training Compliance</option>
         </select>
 
-        <button 
-          type="button" 
-          className="soc-rep-btn-export"
-          onClick={handleExportBriefing}
-        >
-          📥 Export Consolidated Social Briefing
-        </button>
+        <div className="soc-rep-export-group">
+          <button 
+            type="button" 
+            className="soc-rep-btn-export"
+            onClick={() => handleExportBriefing('csv')}
+          >
+            📥 CSV
+          </button>
+          <button 
+            type="button" 
+            className="soc-rep-btn-export"
+            onClick={() => handleExportBriefing('pdf')}
+          >
+            📄 PDF
+          </button>
+        </div>
       </article>
 
       {/* 3. Multi-Quadrant Analytics Grid */}
