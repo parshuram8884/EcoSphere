@@ -6,7 +6,12 @@ from .serializers import DepartmentSerializer, CategorySerializer, ESGConfigurat
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            from rest_framework.permissions import AllowAny
+            return [AllowAny()]
+        return super().get_permissions()
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
