@@ -1,0 +1,252 @@
+/* Department Management styling */
+.depts-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Header & Action Strip */
+.depts-action-strip {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.depts-search-group {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.depts-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	width: 240px;
+	outline: none;
+	color: #1e293b;
+}
+
+.depts-metric-badge {
+	background: #eff6ff;
+	color: #1d4ed8;
+	font-size: 0.78rem;
+	font-weight: 700;
+	padding: 6px 12px;
+	border-radius: 8px;
+}
+
+.depts-btn-add {
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.depts-btn-add:hover {
+	background: #065f46;
+}
+
+/* 2. Split Panel Layout */
+.depts-workspace-grid {
+	display: grid;
+	grid-template-columns: 4fr 6fr;
+	gap: 20px;
+}
+
+/* Left Hierarchy Tree */
+.depts-tree-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.depts-tree-card h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.depts-tree-node {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-left: 16px;
+	position: relative;
+}
+
+.depts-tree-node:before {
+	content: '';
+	position: absolute;
+	left: -8px;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: #cbd5e1;
+}
+
+.depts-tree-node-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #475569;
+	cursor: pointer;
+	user-select: none;
+}
+
+.depts-tree-node-item:hover {
+	color: #059669;
+}
+
+.tree-node-toggle {
+	font-size: 0.72rem;
+	color: #94a3b8;
+}
+
+/* Right Division Profile Grid */
+.depts-profile-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.dept-profile-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.dept-profile-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.dept-profile-name-block {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.dept-profile-name-block h4 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.dept-profile-head-label {
+	font-size: 0.78rem;
+	color: #64748b;
+}
+
+.dept-headcount-badge {
+	background: #f1f5f9;
+	color: #334155;
+	font-size: 0.72rem;
+	font-weight: 700;
+	padding: 4px 10px;
+	border-radius: 6px;
+}
+
+/* Pillar Mini Graph */
+.dept-pillar-graph {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	border-top: 1px solid #f1f5f9;
+	border-bottom: 1px solid #f1f5f9;
+	padding: 10px 0;
+}
+
+.dept-pillar-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.dept-pillar-lbl {
+	width: 32px;
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+}
+
+.dept-pillar-bar-track {
+	flex: 1;
+	height: 8px;
+	background: #f1f5f9;
+	border-radius: 99px;
+	overflow: hidden;
+}
+
+.dept-pillar-bar-fill {
+	height: 100%;
+	border-radius: 99px;
+}
+
+.fill-pillar-env { background: #059669; }
+.fill-pillar-soc { background: #3b82f6; }
+.fill-pillar-gov { background: #8b5cf6; }
+
+.dept-pillar-score-val {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #0f172a;
+	width: 28px;
+	text-align: right;
+}
+
+/* Actions */
+.dept-profile-actions {
+	display: flex;
+	gap: 12px;
+}
+
+.dept-btn-action {
+	background: none;
+	border: none;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+	padding: 2px 0;
+}
+
+.dept-btn-action:hover {
+	color: #0f172a;
+}
+
+@media (max-width: 1024px) {
+	.depts-workspace-grid {
+		grid-template-columns: 1fr;
+	}
+}

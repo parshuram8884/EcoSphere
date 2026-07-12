@@ -8,6 +8,7 @@ import SocialLayout from './pages/social/SocialLayout.jsx'
 import GovernanceLayout from './pages/governance/GovernanceLayout.jsx'
 import GamificationLayout from './pages/gamification/GamificationLayout.jsx'
 import ReportsLayout from './pages/reports/ReportsLayout.jsx'
+import AdministrationLayout from './pages/administration/AdministrationLayout.jsx'
 import OverviewDashboard from './pages/dashboard/Overview.jsx'
 import Analytics from './pages/dashboard/Analytics.jsx'
 import DepartmentRanking from './pages/dashboard/DepartmentRanking.jsx'
@@ -42,11 +43,7 @@ import Categories from './pages/administration/Categories.jsx'
 import ESGSettings from './pages/administration/ESGSettings.jsx'
 import NotificationSettings from './pages/administration/NotificationSettings.jsx'
 import FeatureToggles from './pages/administration/FeatureToggles.jsx'
-import ProfileOverview from './pages/profile/Overview.jsx'
-import Achievements from './pages/profile/Achievements.jsx'
-import ProfileRewards from './pages/profile/Rewards.jsx'
-import Security from './pages/profile/Security.jsx'
-import Preferences from './pages/profile/Preferences.jsx'
+
 function App() {
   return (
     <BrowserRouter>
@@ -94,17 +91,14 @@ function App() {
           <Route path="esg-summary" element={<ESGSummary />} />
           <Route path="custom-report-builder" element={<CustomReportBuilder />} />
         </Route>
-        <Route path="/administration/users" element={<Users />} />
-        <Route path="/administration/departments" element={<Departments />} />
-        <Route path="/administration/categories" element={<Categories />} />
-        <Route path="/administration/esg-settings" element={<ESGSettings />} />
-        <Route path="/administration/notification-settings" element={<NotificationSettings />} />
-        <Route path="/administration/feature-toggles" element={<FeatureToggles />} />
-        <Route path="/profile/overview" element={<ProfileOverview />} />
-        <Route path="/profile/achievements" element={<Achievements />} />
-        <Route path="/profile/rewards" element={<ProfileRewards />} />
-        <Route path="/profile/security" element={<Security />} />
-        <Route path="/profile/preferences" element={<Preferences />} />
+        <Route path="/administration" element={<AdministrationLayout />}>
+          <Route path="users" element={<Users />} />
+          <Route path="departments" element={<Departments />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="esg-settings" element={<ESGSettings />} />
+          <Route path="notification-settings" element={<NotificationSettings />} />
+          <Route path="feature-toggles" element={<FeatureToggles />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,161 @@
+/* Category Management styling */
+.cats-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Split System Header */
+.cats-header-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.cats-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	width: 260px;
+	outline: none;
+	color: #1e293b;
+}
+
+.cats-btn-mint {
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.cats-btn-mint:hover {
+	background: #065f46;
+}
+
+/* 2. Partition Toggles */
+.cats-partition-bar {
+	display: flex;
+	gap: 16px;
+	border-bottom: 1.5px solid #cbd5e1;
+	padding-bottom: 2px;
+}
+
+.cats-partition-btn {
+	background: transparent;
+	border: none;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #64748b;
+	cursor: pointer;
+	padding-bottom: 8px;
+	position: relative;
+}
+
+.cats-partition-btn-active {
+	color: #0f172a;
+}
+
+.cats-partition-btn-active::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -2px;
+	height: 2px;
+	background: #0f172a;
+}
+
+/* 3. Segmented Classification Table */
+.cats-table-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	overflow: hidden;
+}
+
+.cats-table-wrapper {
+	overflow-x: auto;
+}
+
+.cats-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	font-size: 0.85rem;
+}
+
+.cats-table th {
+	background: #f8fafc;
+	border-bottom: 1px solid #cbd5e1;
+	padding: 14px 20px;
+	font-weight: 700;
+	color: #475569;
+	text-transform: uppercase;
+	font-size: 0.68rem;
+}
+
+.cats-table td {
+	border-bottom: 1px solid #f1f5f9;
+	padding: 14px 20px;
+	color: #334155;
+}
+
+.cats-table tr:hover {
+	background: #f8fafc;
+}
+
+.badge-pillar {
+	display: inline-flex;
+	align-items: center;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.pillar-env { background: #ecfdf5; color: #047857; }
+.pillar-soc { background: #eff6ff; color: #1d4ed8; }
+.pillar-gov { background: #faf5ff; color: #7e22ce; }
+
+.badge-system-status {
+	display: inline-flex;
+	align-items: center;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.sys-active { background: #ecfdf5; color: #047857; }
+.sys-deprecated { background: #f1f5f9; color: #475569; }
+
+.cats-btn-action {
+	background: none;
+	border: none;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+	padding: 2px 6px;
+}
+
+.cats-btn-action:hover {
+	color: #0f172a;
+}
