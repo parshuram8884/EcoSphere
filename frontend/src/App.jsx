@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from "./components/ProtectedRoute";
 import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
@@ -51,47 +52,47 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route path="overview" element={<OverviewDashboard />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="department-ranking" element={<DepartmentRanking />} />
           <Route path="activity-feed" element={<ActivityFeed />} />
           <Route path="notifications" element={<Notifications />} />
         </Route>
-        <Route path="/environmental" element={<EnvironmentalLayout />}>
+        <Route path="/environmental" element={<ProtectedRoute><EnvironmentalLayout /></ProtectedRoute>}>
           <Route path="dashboard" element={<EnvironmentalDashboard />} />
           <Route path="carbon-transactions" element={<CarbonTransactions />} />
           <Route path="emission-factors" element={<EmissionFactors />} />
           <Route path="environmental-goals" element={<EnvironmentalGoals />} />
           <Route path="product-esg" element={<ProductESG />} />
         </Route>
-        <Route path="/social" element={<SocialLayout />}>
+        <Route path="/social" element={<ProtectedRoute><SocialLayout /></ProtectedRoute>}>
           <Route path="csr-activities" element={<CSRActivities />} />
           <Route path="employee-participation" element={<EmployeeParticipation />} />
           <Route path="diversity-metrics" element={<DiversityMetrics />} />
           <Route path="training" element={<Training />} />
         </Route>
-        <Route path="/governance" element={<GovernanceLayout />}>
+        <Route path="/governance" element={<ProtectedRoute><GovernanceLayout /></ProtectedRoute>}>
           <Route path="policies" element={<Policies />} />
           <Route path="policy-acknowledgements" element={<PolicyAcknowledgements />} />
           <Route path="audits" element={<Audits />} />
           <Route path="compliance-issues" element={<ComplianceIssues />} />
         </Route>
-        <Route path="/gamification" element={<GamificationLayout />}>
+        <Route path="/gamification" element={<ProtectedRoute><GamificationLayout /></ProtectedRoute>}>
           <Route path="challenges" element={<Challenges />} />
           <Route path="challenge-participation" element={<ChallengeParticipation />} />
           <Route path="badges" element={<Badges />} />
           <Route path="rewards" element={<Rewards />} />
           <Route path="leaderboard" element={<Leaderboard />} />
         </Route>
-        <Route path="/reports" element={<ReportsLayout />}>
+        <Route path="/reports" element={<ProtectedRoute><ReportsLayout /></ProtectedRoute>}>
           <Route path="environmental-report" element={<EnvironmentalReport />} />
           <Route path="social-report" element={<SocialReport />} />
           <Route path="governance-report" element={<GovernanceReport />} />
           <Route path="esg-summary" element={<ESGSummary />} />
           <Route path="custom-report-builder" element={<CustomReportBuilder />} />
         </Route>
-        <Route path="/administration" element={<AdministrationLayout />}>
+        <Route path="/administration" element={<ProtectedRoute><AdministrationLayout /></ProtectedRoute>}>
           <Route path="users" element={<Users />} />
           <Route path="departments" element={<Departments />} />
           <Route path="categories" element={<Categories />} />

@@ -1,281 +1,137 @@
 import { useState } from 'react'
 import './CSRActivities.css'
+import { useApi } from '../../hooks/useApi'
 
 export default function CSRActivities() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [category, setCategory] = useState('All')
-  const [status, setStatus] = useState('All')
+  const [categoryFilter, setCategoryFilter] = useState('All Categories')
+  const [statusFilter, setStatusFilter] = useState('Active & Upcoming')
+
+  const { data: activities, loading, error } = useApi('/social/activities/')
+  const { data: summary } = useApi('/social/dashboard/')
+
+  if (loading) return <div style={{ padding: 20 }}>Loading CSR activities...</div>
+  if (error) return <div style={{ padding: 20, color: 'red' }}>Error: {error}</div>
+  if (!activities) return null
+
+  const filteredActivities = activities.filter(activity => {
+    const matchesSearch = activity.title.toLowerCase().includes(searchQuery.toLowerCase()) || activity.description.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = categoryFilter === 'All Categories' || activity.category_name === categoryFilter
+    
+    let matchesStatus = true
+    if (statusFilter === 'Active & Upcoming') matchesStatus = activity.status === 'active'
+    if (statusFilter === 'Completed') matchesStatus = activity.status === 'completed'
+    
+    return matchesSearch && matchesCategory && matchesStatus
+  })
+
+  // Get unique categories for the filter
+  const categories = ['All Categories', ...new Set(activities.map(a => a.category_name).filter(Boolean))]
 
   return (
     <div className="csr-container">
-      {/* 1. Title Row */}
-      <article className="csr-title-row">
-        <div className="csr-title-block">
-          <h2>CSR Activities</h2>
-          <p>Corporate Social Responsibility management and tracking.</p>
+      {/* 1. Header & Metrics Ribbon */}
+      <section className="csr-header-section" aria-label="CSR Metrics">
+        <div className="csr-header-text">
+          <h2>Corporate Social Responsibility</h2>
+          <p>Discover, track, and participate in community and environmental impact initiatives.</p>
         </div>
-
-        <div className="csr-actions-bar">
-          <div className="csr-view-toggle" aria-hidden="true">
-            <button type="button" className="csr-toggle-btn csr-toggle-btn-active">Grid View</button>
-            <button type="button" className="csr-toggle-btn">List View</button>
-          </div>
-          <button type="button" className="csr-btn-propose">
-            ➕ Propose CSR Activity
-          </button>
-        </div>
-      </article>
-
-      {/* 2. Top Metric Cards */}
-      <section className="csr-metrics-row" aria-label="CSR activities summary metrics">
-        {/* Hours Card */}
-        <article className="csr-metric-card">
-          <div className="csr-metric-icon-box icon-bg-hours" aria-hidden="true">
-            ⏱️
-          </div>
-          <div className="csr-metric-details">
-            <span className="csr-metric-label">Volunteer Hours</span>
-            <strong className="csr-metric-val">4,820 Hours</strong>
-            <span className="csr-metric-delta delta-green">↗ +12% vs last Q</span>
-          </div>
-        </article>
-
-        {/* Engagement Card */}
-        <article className="csr-metric-card">
-          <div className="csr-metric-icon-box icon-bg-participation" aria-hidden="true">
-            👥
-          </div>
-          <div className="csr-metric-details">
-            <span className="csr-metric-label">Engagement Rate</span>
-            <strong className="csr-metric-val">74% Participation</strong>
-            <span className="csr-metric-delta delta-green">+4% vs Tier 1 Industry</span>
-          </div>
-        </article>
-
-        {/* Capital Card */}
-        <article className="csr-metric-card">
-          <div className="csr-metric-icon-box icon-bg-capital" aria-hidden="true">
-            💵
-          </div>
-          <div className="csr-metric-details">
-            <span className="csr-metric-label">Capital Allocated</span>
-            <strong className="csr-metric-val">$85,000</strong>
-            <span className="csr-metric-delta delta-grey">✓ FY 2024 Budget</span>
-          </div>
-        </article>
-      </section>
-
-      {/* 3. Filters Toolbar Card */}
-      <article className="csr-filters-panel">
-        <input 
-          type="search" 
-          className="csr-search-input" 
-          placeholder="Search activities..." 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
-        <div className="csr-dropdowns-group">
-          <select 
-            className="goals-dropdown" 
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="All">All Categories</option>
-            <option value="Environment">Environment</option>
-            <option value="Education">Education</option>
-          </select>
-
-          <select 
-            className="goals-dropdown" 
-            value={status} 
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="All">All Status</option>
-            <option value="Open">Open</option>
-            <option value="Completed">Completed</option>
-          </select>
-
-          <button type="button" className="ledger-btn-action">
-            🎛️ More Filters
-          </button>
-        </div>
-      </article>
-
-      {/* 4. Split Layout */}
-      <section className="csr-split-layout" aria-label="CSR activities detail layout">
         
-        {/* Left Column: Upcoming Activities */}
-        <div className="csr-left-panel">
-          <div className="csr-panel-title-row">
-            <h3>Upcoming Activities</h3>
-            <a href="#view-all" className="csr-view-all-link">View All</a>
-          </div>
-
-          <div className="csr-activities-grid">
-            {/* Card 1 */}
-            <article className="csr-activity-card">
-              <div className="csr-card-image-box">
-                <img className="csr-card-image" src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=300&fit=crop&q=80" alt="Annual Beach Cleanup" />
-                <span className="csr-card-status-tag">✓ Open to Join</span>
-              </div>
-              <div className="csr-card-details">
-                <h4>Annual Beach Cleanup</h4>
-                <div className="csr-location-row">
-                  <span>📍</span>
-                  <span>Pacific Coast Beachline</span>
-                </div>
-                
-                <div className="csr-meta-grid">
-                  <div className="csr-meta-item">
-                    <span className="csr-meta-label">Date & Time</span>
-                    <span className="csr-meta-val">Oct 14, 09:00 AM</span>
-                  </div>
-                  <div className="csr-meta-item">
-                    <span className="csr-meta-label">Roster Status</span>
-                    <span className="csr-meta-val">Open to all</span>
-                  </div>
-                </div>
-
-                <div className="csr-progress-box">
-                  <div className="csr-progress-labels">
-                    <span>Target: 100 Volunteers</span>
-                    <span>82% joined</span>
-                  </div>
-                  <div className="goals-progress-track">
-                    <div className="goals-progress-fill" style={{ width: '82%', background: '#059669', height: '100%' }}></div>
-                  </div>
-                </div>
-
-                <div className="csr-card-actions">
-                  <button type="button" className="csr-btn-card-outline">ISO Compliant File</button>
-                  <button type="button" className="csr-btn-card-solid">Manage Roster</button>
-                </div>
-              </div>
-            </article>
-
-            {/* Card 2 */}
-            <article className="csr-activity-card">
-              <div className="csr-card-image-box">
-                <img className="csr-card-image" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&fit=crop&q=80" alt="Tech Mentorship Workshop" />
-                <span className="csr-card-status-tag">✓ Open to Join</span>
-              </div>
-              <div className="csr-card-details">
-                <h4>Tech Mentorship Workshop</h4>
-                <div className="csr-location-row">
-                  <span>📍</span>
-                  <span>Silicon Valley Hub | Room 4B</span>
-                </div>
-                
-                <div className="csr-meta-grid">
-                  <div className="csr-meta-item">
-                    <span className="csr-meta-label">Date & Time</span>
-                    <span className="csr-meta-val">Oct 18, 02:30 PM</span>
-                  </div>
-                  <div className="csr-meta-item">
-                    <span className="csr-meta-label">Roster Status</span>
-                    <span className="csr-meta-val">Registration open</span>
-                  </div>
-                </div>
-
-                <div className="csr-progress-box">
-                  <div className="csr-progress-labels">
-                    <span>Target: 50 Mentors</span>
-                    <span>45% joined</span>
-                  </div>
-                  <div className="goals-progress-track">
-                    <div className="goals-progress-fill" style={{ width: '45%', background: '#eab308', height: '100%' }}></div>
-                  </div>
-                </div>
-
-                <div className="csr-card-actions">
-                  <button type="button" className="csr-btn-card-outline">SDG Align File</button>
-                  <button type="button" className="csr-btn-card-solid">Manage Roster</button>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        {/* Right Column: Calendar Widget */}
-        <div className="csr-right-panel">
-          <article className="csr-calendar-card">
-            <h3>Corporate CSR Calendar</h3>
-            
-            <div className="csr-cal-header-row">
-              <span>October 2024</span>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <span style={{ cursor: 'pointer' }}>&lt;</span>
-                <span style={{ cursor: 'pointer' }}>&gt;</span>
-              </div>
-            </div>
-
-            <div className="csr-cal-days-grid">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                <span key={d} className="csr-cal-weekday">{d}</span>
-              ))}
-              
-              {/* Padding */}
-              <span className="csr-cal-day csr-cal-day-other">29</span>
-              <span className="csr-cal-day csr-cal-day-other">30</span>
-              
-              {/* Month dates */}
-              <span className="csr-cal-day">1</span>
-              <span className="csr-cal-day">2</span>
-              <span className="csr-cal-day">3</span>
-              <span className="csr-cal-day">4</span>
-              <span className="csr-cal-day">5</span>
-              
-              <span className="csr-cal-day">6</span>
-              <span className="csr-cal-day">7</span>
-              <span className="csr-cal-day">8</span>
-              <span className="csr-cal-day">9</span>
-              <span className="csr-cal-day">10</span>
-              <span className="csr-cal-day">11</span>
-              <span className="csr-cal-day">12</span>
-              
-              <span className="csr-cal-day">13</span>
-              <span className="csr-cal-day csr-cal-day-event csr-cal-day-active">
-                14
-                <div className="csr-cal-marker-tooltip">
-                  Tech Workshop
-                </div>
-              </span>
-              <span className="csr-cal-day">15</span>
-              <span className="csr-cal-day">16</span>
-              <span className="csr-cal-day">17</span>
-              <span className="csr-cal-day csr-cal-day-event">18</span>
-              <span className="csr-cal-day">19</span>
-              
-              <span className="csr-cal-day">20</span>
-              <span className="csr-cal-day">21</span>
-              <span className="csr-cal-day">22</span>
-              <span className="csr-cal-day">23</span>
-              <span className="csr-cal-day">24</span>
-              <span className="csr-cal-day">25</span>
-              <span className="csr-cal-day">26</span>
-              
-              <span className="csr-cal-day">27</span>
-              <span className="csr-cal-day">28</span>
-              <span className="csr-cal-day">29</span>
-              <span className="csr-cal-day">30</span>
-              <span className="csr-cal-day">31</span>
-              <span className="csr-cal-day csr-cal-day-other">1</span>
-              <span className="csr-cal-day csr-cal-day-other">2</span>
-            </div>
-
-            <div className="csr-cal-legend">
-              <div className="csr-cal-legend-row">
-                <span className="cal-legend-dot" style={{ background: '#10b981' }}></span>
-                <span>Active/Confirmed CSR Event</span>
-              </div>
-              <div className="csr-cal-legend-row">
-                <span className="cal-legend-dot" style={{ background: '#eab308' }}></span>
-                <span>Pending Approval</span>
-              </div>
-            </div>
+        <div className="csr-metrics-ribbon">
+          <article className="csr-metric-card">
+            <span className="metric-val">{summary?.volunteer_hours || 0}</span>
+            <span className="metric-label">Volunteer Hrs Logged</span>
+          </article>
+          <article className="csr-metric-card">
+            <span className="metric-val">{summary?.engagement_rate || 0}%</span>
+            <span className="metric-label">Employee Engagement</span>
           </article>
         </div>
+      </section>
+
+      {/* 2. Controls / Filters */}
+      <section className="csr-controls-bar">
+        <div className="csr-search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input 
+            type="search" 
+            placeholder="Search activities..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <div className="csr-filters">
+          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="Active & Upcoming">Active & Upcoming</option>
+            <option value="Completed">Completed</option>
+            <option value="All Statuses">All Statuses</option>
+          </select>
+
+          <button className="btn-primary" type="button">Propose Initiative</button>
+        </div>
+      </section>
+
+      {/* 3. Activity Grid */}
+      <section className="csr-grid">
+        {filteredActivities.map((activity) => (
+          <article key={activity.id} className="csr-card">
+            <div className="csr-card-header">
+              <span className={`csr-category-badge cat-${(activity.category_name || 'General').toLowerCase().replace(' ', '-')}`}>
+                {activity.category_name || 'General'}
+              </span>
+              <span className={`csr-status-dot status-${activity.status}`}></span>
+            </div>
+
+            <div className="csr-card-body">
+              <h3>{activity.title}</h3>
+              <p>{activity.description}</p>
+            </div>
+
+            <div className="csr-card-meta">
+              <div className="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>{activity.date}</span>
+              </div>
+              <div className="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>{activity.department_name || 'Global'}</span>
+              </div>
+            </div>
+
+            <div className="csr-card-footer">
+              <div className="csr-avatars">
+                {/* Simulated participant avatars */}
+                <span className="csr-avatar">JD</span>
+                <span className="csr-avatar">AS</span>
+                <span className="csr-avatar">MK</span>
+                <span className="csr-avatar-more">+12</span>
+              </div>
+              <button 
+                type="button" 
+                className={`btn-enroll ${activity.status !== 'active' ? 'btn-disabled' : ''}`}
+                disabled={activity.status !== 'active'}
+              >
+                {activity.status === 'active' ? 'Enroll Now' : 'Closed'}
+              </button>
+            </div>
+          </article>
+        ))}
+        {filteredActivities.length === 0 && (
+          <div style={{ gridColumn: '1 / -1', padding: 40, textAlign: 'center', color: '#64748b' }}>
+            No activities match your filters.
+          </div>
+        )}
       </section>
     </div>
   )

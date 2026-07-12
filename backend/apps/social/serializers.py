@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CSRActivity, EmployeeParticipation
+from .models import CSRActivity, EmployeeParticipation, Training
 from apps.settings_admin.models import FeatureToggle
 
 class CSRActivitySerializer(serializers.ModelSerializer):
@@ -32,3 +32,10 @@ class EmployeeParticipationSerializer(serializers.ModelSerializer):
             if not proof_file:
                 raise serializers.ValidationError({"proof": "Evidence/Proof file is required before approval."})
         return data
+
+class TrainingSerializer(serializers.ModelSerializer):
+    department_name = serializers.ReadOnlyField(source='department.name')
+
+    class Meta:
+        model = Training
+        fields = ['id', 'title', 'description', 'department', 'department_name', 'assigned_to', 'completion_deadline', 'status', 'created_at']

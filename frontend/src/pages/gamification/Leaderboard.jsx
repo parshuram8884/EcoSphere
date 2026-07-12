@@ -1,210 +1,149 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import './Leaderboard.css'
+import { useApi } from '../../hooks/useApi'
 
 export default function Leaderboard() {
-  const [interval, setIntervalVal] = useState('Monthly')
-  const [segment, setSegment] = useState('Individual')
+  const [activeTab, setActiveTab] = useState('global')
 
-  const topThree = [
-    { rank: 1, name: 'Sarah Jenkins', dept: 'Engineering', xp: '4,250 XP', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&fit=crop&q=80' },
-    { rank: 2, name: 'Marcus Thorne', dept: 'Operations', xp: '3,820 XP', avatar: '' },
-    { rank: 3, name: 'Elena Rodriguez', dept: 'Research & Development', xp: '3,120 XP', avatar: '' }
-  ]
+  const { data, loading, error } = useApi('/gamification/leaderboard/')
 
-  const rankTable = [
-    { rank: 4, name: 'Kevin Zhang', dept: 'Finance', xp: '2,950 XP', badges: ['🏅', '⭐', '💎'], trend: 'up' },
-    { rank: 5, name: 'Sarah Chen', dept: 'Human Resources', xp: '2,800 XP', badges: ['🏅', '⭐'], trend: 'steady' },
-    { rank: 6, name: 'Marcus Thome', dept: 'Compliance', xp: '2,750 XP', badges: ['🏅'], trend: 'down' },
-    { rank: 7, name: 'Elena Vance', dept: 'Leadership', xp: '2,500 XP', badges: ['💎'], trend: 'up' }
-  ]
+  if (loading) return <div style={{ padding: 20 }}>Loading leaderboard...</div>
+  if (error) return <div style={{ padding: 20, color: 'red' }}>Error: {error}</div>
+  if (!data) return null
 
-  const departmentalXp = [
-    { name: 'Engineering', xp: '184k XP', pct: 82 },
-    { name: 'Operations', xp: '142k XP', pct: 64 },
-    { name: 'Research & Development', xp: '85k XP', pct: 38 },
-    { name: 'Human Resources', xp: '45k XP', pct: 20 }
-  ]
-
-  const recentWins = [
-    { name: 'Sarah J.', dept: 'Engineering', badge: 'Solar Sentinel', time: '2 minutes ago' },
-    { name: 'Marcus T.', dept: 'Operations', badge: 'Paperless Pioneer', time: '10 minutes ago' },
-    { name: 'Kevin Z.', dept: 'Finance', badge: 'Compliance Champion', time: '1 hour ago' }
-  ]
-
-  const getTrendArrow = (trend) => {
-    switch (trend) {
-      case 'up': return <span className="rank-trend-up">▲</span>
-      case 'down': return <span className="rank-trend-down">▼</span>
-      case 'steady': return <span className="rank-trend-steady">●</span>
-      default: return null
-    }
+  const getRankBadgeClass = (rank) => {
+    if (rank === 1) return 'rank-gold'
+    if (rank === 2) return 'rank-silver'
+    if (rank === 3) return 'rank-bronze'
+    return 'rank-standard'
   }
 
   return (
-    <div className="lead-container">
-      {/* 1. Interval & Segment Bar */}
-      <article className="lead-control-bar">
-        <div className="lead-intervals" aria-label="Leaderboard interval toggles">
+    <div className="leaderboard-container">
+      {/* 1. Header & Season Info */}
+      <section className="leaderboard-header" aria-label="Leaderboard Season Info">
+        <div>
+          <h2>Sustainability Champions</h2>
+          <p>Current Season: Spring 2024 (Ends in 14 days)</p>
+        </div>
+        <div className="leaderboard-tabs">
           <button 
-            type="button" 
-            className={`lead-interval-btn ${interval === 'Weekly' ? 'lead-interval-btn-active' : ''}`}
-            onClick={() => setIntervalVal('Weekly')}
+            className={`leaderboard-tab ${activeTab === 'global' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('global')}
           >
-            Weekly Standings
+            Global Top 10
           </button>
           <button 
-            type="button" 
-            className={`lead-interval-btn ${interval === 'Monthly' ? 'lead-interval-btn-active' : ''}`}
-            onClick={() => setIntervalVal('Monthly')}
+            className={`leaderboard-tab ${activeTab === 'department' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('department')}
           >
-            Monthly Champions
-          </button>
-          <button 
-            type="button" 
-            className={`lead-interval-btn ${interval === 'All-Time' ? 'lead-interval-btn-active' : ''}`}
-            onClick={() => setIntervalVal('All-Time')}
-          >
-            All-Time Masters
+            By Department
           </button>
         </div>
+      </section>
 
-        <div className="lead-segments" aria-label="Leaderboard scope toggles">
-          <button 
-            type="button" 
-            className={`lead-segment-btn ${segment === 'Individual' ? 'lead-segment-btn-active' : ''}`}
-            onClick={() => setSegment('Individual')}
-          >
-            Individual Employees
-          </button>
-          <button 
-            type="button" 
-            className={`lead-segment-btn ${segment === 'Department' ? 'lead-segment-btn-active' : ''}`}
-            onClick={() => setSegment('Department')}
-          >
-            Inter-Departmental Trophy
-          </button>
-        </div>
-      </article>
+      {/* 2. Top 3 Podium (Only visible in Global view) */}
+      {activeTab === 'global' && data.employees.length >= 3 && (
+        <section className="leaderboard-podium" aria-label="Top 3 Performers">
+          {/* Rank 2 */}
+          <article className="podium-card podium-silver">
+            <div className="podium-avatar">
+              <span className="avatar-initials">{data.employees[1].name.substring(0, 2).toUpperCase()}</span>
+              <div className="podium-rank-badge">2</div>
+            </div>
+            <h3>{data.employees[1].name}</h3>
+            <span className="podium-dept">{data.employees[1].dept}</span>
+            <strong className="podium-xp">{data.employees[1].xp} XP</strong>
+          </article>
 
-      {/* 2. Main Two-Column Analytics Layout */}
-      <section className="lead-workspace" aria-label="Leaderboard workspace details">
-        
-        {/* Left Column: Top Performer Standings Board */}
-        <div className="lead-left-panel">
-          {/* Top Tier Pedestal Display */}
-          <article className="lead-pedestal-card">
-            <h3 className="lead-pedestal-title">Top Tier Pedestal Display</h3>
-            
-            <div className="pedestal-display-row">
-              {topThree.map((pod) => {
-                const orderClass = pod.rank === 1 ? 'podium-first' : pod.rank === 2 ? 'podium-second' : 'podium-third'
-                const avatarClass = pod.rank === 1 ? 'avatar-first' : pod.rank === 2 ? 'avatar-second' : 'avatar-third'
-                const medalClass = pod.rank === 1 ? 'medal-first' : pod.rank === 2 ? 'medal-second' : 'medal-third'
-                
-                return (
-                  <div key={pod.rank} className={`pedestal-podium ${orderClass}`}>
-                    <div className="pedestal-avatar-container">
-                      {pod.avatar ? (
-                        <img className={`pedestal-avatar ${avatarClass}`} src={pod.avatar} alt={pod.name} />
-                      ) : (
-                        <div className={`pedestal-avatar ${avatarClass}`} style={{ background: '#f1f5f9', display: 'grid', placeItems: 'center', fontSize: '1.4rem' }}>👤</div>
-                      )}
-                      <span className={`pedestal-medal ${medalClass}`}>
-                        {pod.rank}
-                      </span>
+          {/* Rank 1 */}
+          <article className="podium-card podium-gold">
+            <div className="podium-avatar">
+              <span className="avatar-initials">{data.employees[0].name.substring(0, 2).toUpperCase()}</span>
+              <div className="podium-rank-badge">1</div>
+              <div className="crown-icon">👑</div>
+            </div>
+            <h3>{data.employees[0].name}</h3>
+            <span className="podium-dept">{data.employees[0].dept}</span>
+            <strong className="podium-xp">{data.employees[0].xp} XP</strong>
+          </article>
+
+          {/* Rank 3 */}
+          <article className="podium-card podium-bronze">
+            <div className="podium-avatar">
+              <span className="avatar-initials">{data.employees[2].name.substring(0, 2).toUpperCase()}</span>
+              <div className="podium-rank-badge">3</div>
+            </div>
+            <h3>{data.employees[2].name}</h3>
+            <span className="podium-dept">{data.employees[2].dept}</span>
+            <strong className="podium-xp">{data.employees[2].xp} XP</strong>
+          </article>
+        </section>
+      )}
+
+      {/* 3. Data Table */}
+      <section className="leaderboard-table-container">
+        {activeTab === 'global' ? (
+          <table className="leaderboard-table">
+            <thead>
+              <tr>
+                <th style={{ width: '80px' }}>Rank</th>
+                <th>Employee</th>
+                <th>Department</th>
+                <th style={{ textAlign: 'center' }}>Badges</th>
+                <th style={{ textAlign: 'right' }}>Total XP</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.employees.map((user) => (
+                <tr key={user.rank} className={user.rank <= 3 ? 'row-highlight' : ''}>
+                  <td>
+                    <span className={`rank-pill ${getRankBadgeClass(user.rank)}`}>
+                      {user.rank}
+                    </span>
+                  </td>
+                  <td className="col-user">
+                    <div className="table-avatar">
+                      {user.name.substring(0, 2).toUpperCase()}
                     </div>
-
-                    <span className="pedestal-name">{pod.name}</span>
-                    <span className="pedestal-dept">{pod.dept}</span>
-                    <div className="pedestal-xp">{pod.xp}</div>
-                  </div>
-                )
-              })}
-            </div>
-          </article>
-
-          {/* Rank Extension Table */}
-          <article className="lead-table-card">
-            <div className="lead-table-wrapper">
-              <table className="lead-table">
-                <thead>
-                  <tr>
-                    <th>Rank</th>
-                    <th>Employee Name</th>
-                    <th>Department</th>
-                    <th>Badges Unlocked</th>
-                    <th>Total Earned XP</th>
-                    <th>Trend</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rankTable.map((row) => (
-                    <tr key={row.rank}>
-                      <td className="td-rank-num">#{row.rank}</td>
-                      <td>
-                        <div className="td-emp-profile">
-                          <span style={{ fontWeight: 700, color: '#0f172a' }}>{row.name}</span>
-                        </div>
-                      </td>
-                      <td>{row.dept}</td>
-                      <td>
-                        <div className="td-badges-row">
-                          {row.badges.map((b, i) => (
-                            <span key={i} className="td-badge-icon" aria-hidden="true">{b}</span>
-                          ))}
-                        </div>
-                      </td>
-                      <td style={{ fontWeight: 800, color: '#059669' }}>{row.xp}</td>
-                      <td>{getTrendArrow(row.trend)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        </div>
-
-        {/* Right Column: Gamification Analytics Panel */}
-        <div className="lead-right-panel">
-          {/* Chart A: Departmental Aggregate XP Chart */}
-          <article className="lead-chart-card">
-            <h3>Departmental Aggregate XP Chart</h3>
-            <p>Direct comparison of cumulated gamified XP output across enterprise divisions.</p>
-            
-            <div className="lead-bar-chart" style={{ marginTop: 10 }}>
-              {departmentalXp.map((dept) => (
-                <div key={dept.name} className="lead-bar-row">
-                  <div className="lead-bar-meta">
-                    <span>{dept.name}</span>
-                    <span>{dept.xp}</span>
-                  </div>
-                  <div className="lead-bar-track">
-                    <div className="lead-bar-fill" style={{ width: `${dept.pct}%` }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          {/* Section B: Recent Achievements Stream */}
-          <article className="lead-chart-card">
-            <h3>Recent Achievements Stream</h3>
-            
-            <div className="achievements-timeline">
-              {recentWins.map((win, i) => (
-                <div key={i} className="achievement-timeline-item">
-                  <span className="achievement-timeline-icon" aria-hidden="true">🎉</span>
-                  <div className="achievement-timeline-details">
-                    <div>
-                      <strong>{win.name}</strong> ({win.dept}) just unlocked the <strong>{win.badge}</strong> badge.
+                    <strong>{user.name}</strong>
+                  </td>
+                  <td>{user.dept}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <div className="badge-count-pill">
+                      <span className="badge-icon">🏅</span> {user.badges}
                     </div>
-                    <span className="achievement-timeline-time">{win.time}</span>
-                  </div>
-                </div>
+                  </td>
+                  <td className="col-xp">
+                    <strong>{user.xp}</strong>
+                    <span className="xp-label">XP</span>
+                  </td>
+                </tr>
               ))}
-            </div>
-          </article>
-        </div>
+            </tbody>
+          </table>
+        ) : (
+          <div className="department-leaderboard-grid">
+            {data.departments.map((dept, index) => (
+              <article key={dept.name} className="dept-rank-card">
+                <div className="dept-rank-header">
+                  <span className={`dept-rank-pill ${getRankBadgeClass(index + 1)}`}>#{index + 1}</span>
+                  <h3>{dept.name}</h3>
+                </div>
+                <div className="dept-xp-total">
+                  <strong>{dept.xp.toLocaleString()}</strong>
+                  <span>Total XP</span>
+                </div>
+                <div className="dept-progress-bar">
+                  <div 
+                    className="dept-progress-fill" 
+                    style={{ width: `${Math.min(100, (dept.xp / (data.departments[0]?.xp || 1)) * 100)}%` }} 
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   )

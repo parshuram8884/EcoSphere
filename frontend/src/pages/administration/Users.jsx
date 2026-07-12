@@ -1,202 +1,133 @@
 import { useState } from 'react'
 import './Users.css'
+import { useApi } from '../../hooks/useApi'
 
 export default function Users() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [roleFilter, setRoleFilter] = useState('All')
-  const [deptFilter, setDeptFilter] = useState('All')
-  const [sortField, setSortField] = useState('name')
-  const [sortOrder, setSortOrder] = useState('asc')
+  const [roleFilter, setRoleFilter] = useState('All Roles')
 
-  const initialUsers = [
-    { id: 1, name: 'Marcus Thome', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80', email: 'marcus.thome@ecosphere.com', dept: 'Operations', role: 'System Admin', perm: 'Full Access', status: 'Active', lastLogin: '2 mins ago' },
-    { id: 2, name: 'Sarah Chen', avatar: '', email: 'sarah.chen@ecosphere.com', dept: 'Human Resources', role: 'Sustainability Officer', perm: 'Write', status: 'Active', lastLogin: '1 hour ago' },
-    { id: 3, name: 'Elena Vance', avatar: '', email: 'elena.vance@ecosphere.com', dept: 'Leadership', role: 'Auditor', perm: 'Read', status: 'Invited', lastLogin: 'Never' },
-    { id: 4, name: 'Kevin Zhang', avatar: '', email: 'kevin.zhang@ecosphere.com', dept: 'Finance', role: 'Employee', perm: 'Read', status: 'Suspended', lastLogin: '2 weeks ago' }
-  ]
+  // Using the authentication API for employees
+  const { data: users, loading, error } = useApi('/auth/employees/')
 
-  const [users, setUsers] = useState(initialUsers)
+  if (loading) return <div style={{ padding: 20 }}>Loading users...</div>
+  if (error) return <div style={{ padding: 20, color: 'red' }}>Error: {error}</div>
+  if (!users) return null
 
-  const handleStatusToggle = (id) => {
-    setUsers(users.map(u => {
-      if (u.id === id) {
-        return { ...u, status: u.status === 'Active' ? 'Suspended' : 'Active' }
-      }
-      return u;
-    }))
-  }
-
-  const handleCreateUser = () => {
-    const name = prompt('Enter new user full name:')
-    if (!name) return
-    const email = prompt('Enter corporate email:')
-    if (!email) return
-
-    const newUser = {
-      id: Date.now(),
-      name,
-      avatar: '',
-      email,
-      dept: 'Operations',
-      role: 'Employee',
-      perm: 'Read',
-      status: 'Active',
-      lastLogin: 'Never'
-    }
-
-    setUsers([newUser, ...users])
-  }
-
-  const handleSort = (field) => {
-    const isAsc = sortField === field && sortOrder === 'asc'
-    setSortOrder(isAsc ? 'desc' : 'asc')
-    setSortField(field)
-  }
-
-  const getSortedUsers = () => {
-    return [...users].sort((a, b) => {
-      let valA = a[sortField] || ''
-      let valB = b[sortField] || ''
-      if (typeof valA === 'string') {
-        return sortOrder === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA)
-      }
-      return sortOrder === 'asc' ? valA - valB : valB - valA
-    })
-  }
-
-  const getPermBadge = (perm) => {
-    switch (perm) {
-      case 'Full Access': return <span className="badge-permission perm-full">Full Access</span>
-      case 'Write': return <span className="badge-permission perm-write">Write</span>
-      case 'Read': return <span className="badge-permission perm-read">Read</span>
-      default: return null
-    }
-  }
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Active': return <span className="badge-status status-active">Active</span>
-      case 'Suspended': return <span className="badge-status status-suspended">Suspended</span>
-      case 'Invited': return <span className="badge-status status-invited">Invited</span>
-      default: return null
-    }
-  }
-
-  const sortedUsers = getSortedUsers()
-
-  const filteredUsers = sortedUsers.filter(u => {
-    const searchMatch = u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.toLowerCase())
-    const roleMatch = roleFilter === 'All' || u.role === roleFilter
-    const deptMatch = deptFilter === 'All' || u.dept === deptFilter
-    return searchMatch && roleMatch && deptMatch
+  const filteredUsers = users.filter(user => {
+    const nameStr = `${user.user.first_name} ${user.user.last_name} ${user.user.email} ${user.user.username}`.toLowerCase()
+    const matchesSearch = nameStr.includes(searchQuery.toLowerCase())
+    
+    // Formatting role for display matching
+    const roleDisplay = user.role.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
+    const matchesRole = roleFilter === 'All Roles' || roleDisplay === roleFilter
+    
+    return matchesSearch && matchesRole
   })
+
+  // Get unique roles for filter
+  const roles = ['All Roles', ...new Set(users.map(u => u.role.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())))]
 
   return (
     <div className="users-container">
-      {/* 1. User Directory Controls */}
-      <article className="users-filter-bar">
-        <div className="users-filters-left">
+      {/* 1. Header and Add Button */}
+      <div className="users-header-row">
+        <div>
+          <h2>User Directory</h2>
+          <p>Manage platform access, roles, and functional assignments.</p>
+        </div>
+        <button type="button" className="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight: 6}}>
+            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+          </svg>
+          Invite User
+        </button>
+      </div>
+
+      {/* 2. Controls Ribbon */}
+      <section className="users-controls" aria-label="Filter and Search Users">
+        <div className="users-search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
           <input 
             type="search" 
-            className="users-search-input" 
-            placeholder="Search Users by Name or Email..." 
+            placeholder="Search by name, email, or department..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-
-          <select 
-            className="challenge-dropdown" 
-            value={roleFilter} 
-            onChange={(e) => setRoleFilter(e.target.value)}
-          >
-            <option value="All">Role Class: All</option>
-            <option value="System Admin">System Admin</option>
-            <option value="Sustainability Officer">Sustainability Officer</option>
-            <option value="Auditor">Auditor</option>
-            <option value="Employee">Employee</option>
-          </select>
-
-          <select 
-            className="challenge-dropdown" 
-            value={deptFilter} 
-            onChange={(e) => setDeptFilter(e.target.value)}
-          >
-            <option value="All">Department: All</option>
-            <option value="Operations">Operations</option>
-            <option value="Human Resources">Human Resources</option>
-            <option value="Leadership">Leadership</option>
-            <option value="Finance">Finance</option>
-          </select>
         </div>
 
-        <button 
-          type="button" 
-          className="users-btn-create"
-          onClick={handleCreateUser}
-        >
-          ➕ Create User
-        </button>
-      </article>
+        <div className="users-filters">
+          <select value={roleFilter} onChange={(e) => setRoleFilter(e.target.value)}>
+            {roles.map(r => <option key={r} value={r}>{r}</option>)}
+          </select>
+          <button type="button" className="btn-icon btn-filter-more">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+          </button>
+        </div>
+      </section>
 
-      {/* 2. Enterprise User Master Table */}
-      <article className="users-table-card">
-        <div className="users-table-wrapper">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th onClick={() => handleSort('name')}>User Identity ↕</th>
-                <th onClick={() => handleSort('email')}>Corporate Email ↕</th>
-                <th onClick={() => handleSort('dept')}>Department ↕</th>
-                <th onClick={() => handleSort('role')}>System Role ↕</th>
-                <th>Permissions</th>
-                <th onClick={() => handleSort('status')}>Account Status ↕</th>
-                <th>Toggle Status</th>
-                <th>Last Login</th>
-                <th>Actions</th>
+      {/* 3. Users Data Table */}
+      <section className="users-table-container">
+        <table className="users-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Role</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Last Active</th>
+              <th className="th-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user.id}>
+                <td className="col-user-profile">
+                  <div className="user-avatar">
+                    {user.user.first_name ? user.user.first_name.charAt(0) : user.user.username.charAt(0)}
+                  </div>
+                  <div className="user-info-stack">
+                    <strong>{user.user.first_name} {user.user.last_name || user.user.username}</strong>
+                    <span className="user-email">{user.user.email}</span>
+                  </div>
+                </td>
+                
+                <td>
+                  <span className={`role-badge role-${user.role.split('_')[0].toLowerCase()}`}>
+                    {user.role.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                  </span>
+                </td>
+                
+                <td>{user.department_name || 'N/A'}</td>
+                
+                <td>
+                  <span className={`status-dot dot-${user.status === 'active' ? 'active' : 'inactive'}`}>
+                    {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                  </span>
+                </td>
+                
+                <td className="col-date">2 hours ago</td>
+                
+                <td className="col-actions">
+                  <button type="button" className="btn-icon" aria-label="Edit User">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.map((user) => (
-                <tr key={user.id}>
-                  <td>
-                    <div className="user-identity-cell">
-                      {user.avatar ? (
-                        <img className="user-identity-avatar" src={user.avatar} alt={user.name} />
-                      ) : (
-                        <div className="user-identity-avatar-placeholder" aria-hidden="true">👤</div>
-                      )}
-                      <div className="user-identity-details">
-                        <span className="user-identity-name">{user.name}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><code>{user.email}</code></td>
-                  <td>{user.dept}</td>
-                  <td style={{ fontWeight: 600 }}>{user.role}</td>
-                  <td>{getPermBadge(user.perm)}</td>
-                  <td>{getStatusBadge(user.status)}</td>
-                  <td>
-                    <label className="switch-toggle-label" aria-label="Toggle user status active state">
-                      <input 
-                        type="checkbox" 
-                        className="switch-toggle-input" 
-                        checked={user.status === 'Active'} 
-                        onChange={() => handleStatusToggle(user.id)}
-                      />
-                      <span className="switch-toggle-slider"></span>
-                    </label>
-                  </td>
-                  <td>{user.lastLogin}</td>
-                  <td>
-                    <button type="button" className="users-btn-action">Edit</button>
-                    <button type="button" className="users-btn-action" style={{ color: '#ef4444' }}>Revoke</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </article>
+            ))}
+          </tbody>
+        </table>
+        {filteredUsers.length === 0 && (
+          <div className="empty-state">
+             <p>No users found matching your filters.</p>
+          </div>
+        )}
+      </section>
     </div>
   )
 }

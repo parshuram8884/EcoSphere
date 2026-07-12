@@ -37,3 +37,21 @@ class EmployeeParticipation(models.Model):
 
     def __str__(self):
         return f"{self.employee.user.username} in {self.activity.title} ({self.approval_status})"
+
+class Training(models.Model):
+    STATUS_CHOICES = [
+        ('active', 'Active'),
+        ('completed', 'Completed'),
+        ('expired', 'Expired'),
+    ]
+
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    department = models.ForeignKey('settings_admin.Department', on_delete=models.CASCADE, related_name='trainings')
+    assigned_to = models.ManyToManyField('authentication.Employee', related_name='trainings', blank=True)
+    completion_deadline = models.DateField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
