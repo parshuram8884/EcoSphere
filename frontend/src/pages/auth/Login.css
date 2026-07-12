@@ -432,3 +432,26 @@
 		width: calc(50% - 92px);
 	}
 }
+
+/* Error messages */
+.auth-error {
+	background: rgba(239, 68, 68, 0.12);
+	border: 1px solid rgba(239, 68, 68, 0.3);
+	color: #fca5a5;
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-size: 0.85rem;
+	margin-bottom: 8px;
+}
+
+.field-error {
+	color: #fca5a5;
+	font-size: 0.78rem;
+	margin-top: 4px;
+	display: block;
+}
+
+.auth-submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
