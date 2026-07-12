@@ -1,5 +1,5 @@
 import './GovernanceReport.css'
-import { downloadReport } from '../../services/api'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function GovernanceReport() {
   const auditPoints = [
@@ -8,14 +8,22 @@ export default function GovernanceReport() {
     { point: 'Whistleblower hotline test', action: 'Conduct live mock triage session', due: 'Dec 01, 2024', status: 'Verified' }
   ]
 
-  const handleGenerateDeck = async () => {
-    const r = await downloadReport('governance_deck', 'pdf')
-    if (!r.ok) alert('Export failed: ' + r.message)
-  }
-
-  const handleDownloadZip = async () => {
-    const r = await downloadReport('governance_iso', 'pdf')
-    if (!r.ok) alert('Export failed: ' + r.message)
+  const handleGenerateDeck = (format) => {
+    const cols = [
+      { key: 'point', label: 'Audit Checklist Point' },
+      { key: 'action', label: 'Corrective Action Required' },
+      { key: 'due', label: 'Remediation Date' },
+      { key: 'status', label: 'Status' },
+    ]
+    if (format === 'csv') {
+      exportToCSV(auditPoints, cols, 'Governance_Report')
+    } else {
+      const meta = [
+        { label: 'Regulatory Compliance', value: '100% Free' },
+        { label: 'Policy Acknowledgment', value: '98.2% Coverage' },
+      ]
+      exportToPDF('Governance Report', meta, auditPoints, cols, 'Governance_Report')
+    }
   }
 
   return (
@@ -135,16 +143,16 @@ export default function GovernanceReport() {
         <button 
           type="button" 
           className="env-btn-secondary"
-          onClick={handleGenerateDeck}
+          onClick={() => handleGenerateDeck('csv')}
         >
-          📄 Generate Board Presentation Deck PDF
+          📥 CSV
         </button>
         <button 
           type="button" 
           className="env-btn-primary"
-          onClick={handleDownloadZip}
+          onClick={() => handleGenerateDeck('pdf')}
         >
-          📦 Download ISO Compliance Package Zip
+          📄 PDF
         </button>
       </article>
     </div>

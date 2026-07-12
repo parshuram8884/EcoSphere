@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './EnvironmentalGoals.css'
-import { downloadReport } from '../../services/api'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function EnvironmentalGoals() {
   const [scope, setScope] = useState('Global (All)')
@@ -49,12 +49,40 @@ export default function EnvironmentalGoals() {
         </div>
 
         <div className="goals-header-actions">
-          <button type="button" className="env-btn-primary" onClick={async () => {
-            const r = await downloadReport('environmental_goals', 'pdf')
-            if (!r.ok) alert('Export failed: ' + r.message)
-          }}>
-            Export Report
-          </button>
+          <div className="goals-export-group">
+            <button type="button" className="env-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'title', label: 'Goal' },
+                { key: 'status', label: 'Status' },
+                { key: 'progress', label: 'Progress' },
+                { key: 'target', label: 'Target' },
+              ]
+              const goalsData = [
+                { title: 'Net-Zero Carbon 2040', status: 'On-Track', progress: '45%', target: '0 tCO2e' },
+                { title: 'Renewable Energy Transition', status: 'Needs Focus', progress: '42%', target: '100%' },
+                { title: 'Water Waste Reduction', status: 'On-Track', progress: '82%', target: '100%' },
+              ]
+              exportToCSV(goalsData, cols, 'Environmental_Goals')
+            }}>📥 CSV</button>
+            <button type="button" className="env-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'title', label: 'Goal' },
+                { key: 'status', label: 'Status' },
+                { key: 'progress', label: 'Progress' },
+                { key: 'target', label: 'Target' },
+              ]
+              const goalsData = [
+                { title: 'Net-Zero Carbon 2040', status: 'On-Track', progress: '45%', target: '0 tCO2e' },
+                { title: 'Renewable Energy Transition', status: 'Needs Focus', progress: '42%', target: '100%' },
+                { title: 'Water Waste Reduction', status: 'On-Track', progress: '82%', target: '100%' },
+              ]
+              const meta = [
+                { label: 'Overall Completion', value: '58%' },
+                { label: 'Target Confidence', value: 'High' },
+              ]
+              exportToPDF('Environmental Goals Report', meta, goalsData, cols, 'Environmental_Goals')
+            }}>📄 PDF</button>
+          </div>
         </div>
       </article>
 

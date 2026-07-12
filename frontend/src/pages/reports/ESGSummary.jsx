@@ -1,5 +1,5 @@
 import './ESGSummary.css'
-import { downloadReport } from '../../services/api'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function ESGSummary() {
   const departments = [
@@ -9,9 +9,22 @@ export default function ESGSummary() {
     { name: 'Corporate Office', env: 'High', soc: 'High', gov: 'High' }
   ]
 
-  const handleExportFull = async () => {
-    const r = await downloadReport('esg_summary', 'pdf')
-    if (!r.ok) alert('Export failed: ' + r.message)
+  const handleExportFull = (format) => {
+    const cols = [
+      { key: 'name', label: 'Business Unit' },
+      { key: 'env', label: 'Environmental' },
+      { key: 'soc', label: 'Social' },
+      { key: 'gov', label: 'Governance' },
+    ]
+    if (format === 'csv') {
+      exportToCSV(departments, cols, 'ESG_Summary')
+    } else {
+      const meta = [
+        { label: 'ESG Rating', value: 'A-' },
+        { label: 'Corporate Score', value: '86/100' },
+      ]
+      exportToPDF('ESG Summary Report', meta, departments, cols, 'ESG_Summary')
+    }
   }
 
   const getPerfTag = (score) => {
@@ -33,13 +46,22 @@ export default function ESGSummary() {
           </div>
         </div>
 
-        <button 
-          type="button" 
-          className="btn-export-full"
-          onClick={handleExportFull}
-        >
-          📥 Export Full Integrated ESG Annual Report (PDF)
-        </button>
+        <div className="summary-export-group">
+          <button 
+            type="button" 
+            className="btn-export-full"
+            onClick={() => handleExportFull('csv')}
+          >
+            📥 CSV
+          </button>
+          <button 
+            type="button" 
+            className="btn-export-full"
+            onClick={() => handleExportFull('pdf')}
+          >
+            📄 PDF
+          </button>
+        </div>
       </article>
 
       {/* 2. Cross-Pillar Radar Analytics Section */}

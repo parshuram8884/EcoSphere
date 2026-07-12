@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './CarbonTransactions.css'
+import { exportToCSV, exportToPDF } from '../../utils/exportUtils'
 
 export default function CarbonTransactions() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -106,9 +107,36 @@ export default function CarbonTransactions() {
             </button>
           </div>
 
-          <button type="button" className="ledger-btn-primary">
-            📥 Export Data
-          </button>
+          <div className="ledger-export-group">
+            <button type="button" className="ledger-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'id', label: 'Transaction ID' },
+                { key: 'time', label: 'Timestamp' },
+                { key: 'dept', label: 'Facility / Dept' },
+                { key: 'source', label: 'Activity Source' },
+                { key: 'footprint', label: 'Footprint Status' },
+                { key: 'emissions', label: 'Emissions (tCO2e)' },
+                { key: 'status', label: 'Status' },
+              ]
+              exportToCSV(transactions, cols, 'Carbon_Transactions')
+            }}>📥 CSV</button>
+            <button type="button" className="ledger-btn-primary" onClick={() => {
+              const cols = [
+                { key: 'id', label: 'Transaction ID' },
+                { key: 'time', label: 'Timestamp' },
+                { key: 'dept', label: 'Facility / Dept' },
+                { key: 'source', label: 'Activity Source' },
+                { key: 'footprint', label: 'Footprint Status' },
+                { key: 'emissions', label: 'Emissions (tCO2e)' },
+                { key: 'status', label: 'Status' },
+              ]
+              const meta = [
+                { label: 'Total Transactions', value: String(transactions.length) },
+                { label: 'Export Date', value: new Date().toLocaleDateString() },
+              ]
+              exportToPDF('Carbon Transactions Report', meta, transactions, cols, 'Carbon_Transactions')
+            }}>📄 PDF</button>
+          </div>
         </div>
       </article>
 

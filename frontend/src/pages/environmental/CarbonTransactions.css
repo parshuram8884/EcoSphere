@@ -332,3 +332,14 @@
 		align-items: stretch;
 	}
 }
+
+/* Export group */
+.ledger-export-group {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.ledger-export-group .ledger-btn-primary {
+	font-size: 0.78rem;
+	padding: 6px 14px;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './EnvironmentalReport.css'
-import { downloadReport } from '../../services/api'
+import { exportToCSV, exportToPDF, exportToExcel } from '../../utils/exportUtils'
 
 export default function EnvironmentalReport() {
   const [fiscalYear, setFiscalYear] = useState('FY 2024')
@@ -14,15 +14,30 @@ export default function EnvironmentalReport() {
     { cat: 'Scope 3: Business Travel', coeff: 'Flight EPA (0.150 kg CO₂e / pkm)', savings: '$2,100', conf: 'Medium' }
   ]
 
-  const handleDownload = async (format) => {
-    const fmtMap = { PDF: 'pdf', Excel: 'excel', CSV: 'csv' }
-    const r = await downloadReport('environmental', fmtMap[format] || 'pdf')
-    if (!r.ok) alert('Export failed: ' + r.message)
+  const handleDownload = (format) => {
+    const cols = [
+      { key: 'cat', label: 'Emission Category' },
+      { key: 'coeff', label: 'Coefficient Mapped' },
+      { key: 'savings', label: 'Direct Costs Saved' },
+      { key: 'conf', label: 'Confidence Rating' },
+    ]
+    if (format === 'CSV') {
+      exportToCSV(balanceSheet, cols, 'Environmental_Report')
+    } else if (format === 'Excel') {
+      exportToExcel(balanceSheet, cols, 'Environmental_Report')
+    } else {
+      const meta = [
+        { label: 'Fiscal Year', value: fiscalYear },
+        { label: 'Scope', value: scope },
+        { label: 'Standard', value: standard },
+      ]
+      exportToPDF('Environmental Compliance Report', meta, balanceSheet, cols, 'Environmental_Report')
+    }
     setIsExportOpen(false)
   }
 
   const handlePrint = () => {
-    handleDownload('PDF')
+    alert('Simulating Print Preview: Compiling layout coordinates for printer output...')
   }
 
   return (

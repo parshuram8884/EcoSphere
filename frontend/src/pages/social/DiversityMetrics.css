@@ -276,3 +276,14 @@
 		width: 100%;
 	}
 }
+
+/* Export group */
+.diversity-export-group {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.diversity-export-group .env-btn-primary {
+	font-size: 0.78rem;
+	padding: 6px 14px;
+}
