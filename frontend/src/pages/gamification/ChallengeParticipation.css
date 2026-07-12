@@ -1,0 +1,431 @@
+/* Challenge Participation approval view styling */
+.chal-part-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Operations Selector Ribbon */
+.chal-part-ribbon {
+	display: flex;
+	gap: 24px;
+	border-bottom: 1.5px solid #cbd5e1;
+	padding-bottom: 2px;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.chal-part-ribbon::-webkit-scrollbar {
+	display: none;
+}
+
+.chal-part-tab-link {
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #64748b;
+	padding-bottom: 10px;
+	position: relative;
+	white-space: nowrap;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.chal-part-tab-link-active {
+	color: #0f172a;
+}
+
+.chal-part-tab-link-active::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1.5px;
+	height: 2px;
+	background: #0f172a;
+}
+
+.chal-part-tab-badge {
+	background: #3b82f6;
+	color: #ffffff;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 1px 6px;
+	border-radius: 99px;
+}
+
+/* 2. Twin-Panel Review Architecture */
+.chal-part-split-layout {
+	display: grid;
+	grid-template-columns: 2fr 3fr;
+	gap: 20px;
+}
+
+/* Left list */
+.chal-part-left-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.chal-part-left-header {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #334155;
+	border-bottom: 1px solid #f1f5f9;
+	padding-bottom: 12px;
+}
+
+.chal-part-feed-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.chal-part-feed-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px;
+	border: 1.5px solid #cbd5e1;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 0.18s;
+}
+
+.chal-part-feed-item-active {
+	border-color: #059669;
+	background: #f0fdf4;
+}
+
+.chal-part-feed-identity {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.chal-part-feed-avatar {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.chal-part-feed-avatar-placeholder {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: #f1f5f9;
+	display: grid;
+	place-items: center;
+	color: #64748b;
+	font-size: 1.1rem;
+}
+
+.chal-part-feed-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.chal-part-feed-name {
+	font-weight: 700;
+	color: #0f172a;
+	font-size: 0.85rem;
+}
+
+.chal-part-feed-title {
+	font-size: 0.78rem;
+	color: #475569;
+}
+
+.chal-part-feed-streak {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #059669;
+	margin-top: 4px;
+}
+
+.chal-part-feed-pts {
+	background: #f3e8ff;
+	color: #7e22ce;
+	font-size: 0.72rem;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 99px;
+}
+
+/* Right Details Workspace */
+.chal-part-right-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.chal-part-details-profile {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #f1f5f9;
+	padding-bottom: 16px;
+}
+
+.chal-part-details-user {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.chal-part-details-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.chal-part-details-name-block {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.chal-part-details-name-block strong {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.chal-part-details-dept-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.78rem;
+}
+
+.chal-part-dept-badge {
+	background: #f1f5f9;
+	color: #475569;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 0.68rem;
+}
+
+.chal-part-details-history {
+	text-align: right;
+	font-size: 0.72rem;
+	color: #64748b;
+}
+
+.chal-part-details-history strong {
+	display: block;
+	font-size: 0.95rem;
+	color: #059669;
+	margin-top: 4px;
+}
+
+/* Evidence preview container */
+.chal-part-evidence-card {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 10px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.chal-part-evidence-card h4 {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin: 0;
+}
+
+.chal-part-evidence-preview-container {
+	height: 120px;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #f1f5f9;
+}
+
+.chal-part-evidence-preview-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.chal-part-receipt-card {
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+}
+
+.chal-part-receipt-icon {
+	font-size: 1.4rem;
+}
+
+.chal-part-receipt-name {
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #334155;
+}
+
+.chal-part-receipt-meta {
+	font-size: 0.68rem;
+	color: #64748b;
+}
+
+/* Action button controls */
+.chal-part-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #f1f5f9;
+	padding-top: 16px;
+}
+
+.chal-part-btn-reject {
+	background: #ffffff;
+	border: 1px solid #fca5a5;
+	color: #ef4444;
+	border-radius: 8px;
+	padding: 10px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.chal-part-btn-approve {
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 18px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(6, 78, 59, 0.1);
+}
+
+.chal-part-btn-approve:hover {
+	background: #065f46;
+}
+
+/* 3. Bottom Activity Lifecycle Milestone Line */
+.chal-part-lifecycle {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.chal-part-lifecycle h4 {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin: 0;
+}
+
+.chal-part-timeline-graphic {
+	position: relative;
+	height: 60px;
+	display: flex;
+	align-items: center;
+}
+
+.chal-part-timeline-line {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: #cbd5e1;
+	z-index: 1;
+}
+
+.chal-part-timeline-nodes {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	z-index: 2;
+}
+
+.chal-part-timeline-node {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	width: 120px;
+}
+
+.chal-part-timeline-node-dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 3px solid #ffffff;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.chal-part-node-dot-done { background: #059669; }
+.chal-part-node-dot-active { background: #3b82f6; }
+.chal-part-node-dot-pending { background: #94a3b8; }
+
+.chal-part-timeline-node-title {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #0f172a;
+	margin-top: 6px;
+}
+
+.chal-part-timeline-node-date {
+	font-size: 0.64rem;
+	color: #64748b;
+	margin-top: 2px;
+}
+
+@media (max-width: 1024px) {
+	.chal-part-split-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.chal-part-actions {
+		flex-direction: column;
+		gap: 12px;
+		align-items: stretch;
+	}
+
+	.chal-part-btn-reject,
+	.chal-part-btn-approve {
+		text-align: center;
+		justify-content: center;
+	}
+}

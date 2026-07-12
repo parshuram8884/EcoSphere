@@ -1,0 +1,226 @@
+/* Badge Management configuration stylesheet */
+.badges-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Strategic Metrics Strip */
+.badges-metrics-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.badge-metric-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.badge-metric-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: #eff6ff;
+	color: #1d4ed8;
+	display: grid;
+	place-items: center;
+	font-size: 1.25rem;
+}
+
+.badge-metric-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.badge-metric-label {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.badge-metric-val {
+	font-size: 1.3rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.badge-metric-sub {
+	font-size: 0.72rem;
+	color: #1d4ed8;
+	font-weight: 600;
+}
+
+/* 2. Controls Header */
+.badge-controls-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.badge-search-group {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	flex: 1;
+}
+
+.badge-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	width: 260px;
+	outline: none;
+	color: #1e293b;
+}
+
+.badge-btn-mint {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.badge-btn-mint:hover {
+	background: #065f46;
+}
+
+/* 3. Main Visual Badge Grid */
+.badge-assets-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.badge-asset-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 12px;
+}
+
+.badge-svg-container {
+	width: 80px;
+	height: 80px;
+	margin-bottom: 4px;
+}
+
+.badge-asset-card h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.badge-unlock-rule {
+	font-size: 0.78rem;
+	color: #64748b;
+	line-height: 1.45;
+	min-height: 38px;
+}
+
+.badge-progress-box {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	text-align: left;
+	border-top: 1px solid #f1f5f9;
+	border-bottom: 1px solid #f1f5f9;
+	padding: 10px 0;
+}
+
+.badge-progress-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+}
+
+.badge-asset-actions {
+	display: flex;
+	gap: 10px;
+	width: 100%;
+}
+
+.badge-btn-action {
+	flex: 1;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	color: #334155;
+	border-radius: 8px;
+	padding: 8px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.badge-btn-action:hover {
+	background: #f8fafc;
+}
+
+@media (max-width: 1024px) {
+	.badge-assets-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 760px) {
+	.badges-metrics-row {
+		grid-template-columns: 1fr;
+	}
+
+	.badge-assets-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.badge-controls-header {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.badge-search-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.badge-search-input {
+		width: 100%;
+	}
+}

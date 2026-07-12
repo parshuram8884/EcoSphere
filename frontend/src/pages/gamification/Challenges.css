@@ -1,0 +1,347 @@
+/* Challenges view stylesheet */
+.challenges-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Executive Challenge Analytics */
+.challenges-stats-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.challenge-stat-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.challenge-stat-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background: #ecfdf5;
+	color: #059669;
+	display: grid;
+	place-items: center;
+	font-size: 1.25rem;
+}
+
+.challenge-stat-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.challenge-stat-label {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.challenge-stat-val {
+	font-size: 1.4rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.challenge-stat-sub {
+	font-size: 0.72rem;
+	color: #059669;
+	font-weight: 600;
+}
+
+/* 2. Challenge Control Toolbar */
+.challenge-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.challenge-search-group {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	flex: 1;
+}
+
+.challenge-search-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 14px;
+	font-size: 0.82rem;
+	width: 260px;
+	outline: none;
+	color: #1e293b;
+}
+
+.challenge-dropdown {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #334155;
+	outline: none;
+	cursor: pointer;
+}
+
+.challenge-btn-create {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 8px 16px;
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.challenge-btn-create:hover {
+	background: #065f46;
+}
+
+/* 3. Challenge Matrix Grid */
+.challenge-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.challenge-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.challenge-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.badge-difficulty {
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 3px 8px;
+	border-radius: 4px;
+	text-transform: uppercase;
+}
+
+.difficulty-beg { background: #eff6ff; color: #1d4ed8; }
+.difficulty-int { background: #fff7ed; color: #c2410c; }
+.difficulty-war { background: #fef2f2; color: #b91c1c; }
+
+.challenge-card-rewards {
+	display: flex;
+	gap: 8px;
+}
+
+.badge-reward-xp {
+	background: #f3e8ff;
+	color: #7e22ce;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+.badge-reward-pts {
+	background: #ecfdf5;
+	color: #047857;
+	font-size: 0.68rem;
+	font-weight: 700;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+.challenge-card-title h3 {
+	font-size: 1rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+	line-height: 1.35;
+}
+
+.challenge-card-progress {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.challenge-progress-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+}
+
+.challenge-status-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #f1f5f9;
+	padding-top: 10px;
+	font-size: 0.78rem;
+}
+
+.challenge-status-lbl {
+	font-weight: 700;
+	color: #475569;
+}
+
+.challenge-status-lbl span {
+	font-size: 0.68rem;
+	text-transform: uppercase;
+	font-weight: 800;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+.lbl-live { background: #ecfdf5; color: #047857; }
+.lbl-draft { background: #eff6ff; color: #1d4ed8; }
+.lbl-completed { background: #f1f5f9; color: #475569; }
+
+/* 4. Pop-up Interaction States (Modal Simulation Engine) */
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.6);
+	backdrop-filter: blur(4px);
+	display: grid;
+	place-items: center;
+	z-index: 1000;
+}
+
+.modal-content {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 24px;
+	width: 100%;
+	max-width: 460px;
+	box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #f1f5f9;
+	padding-bottom: 12px;
+}
+
+.modal-header h3 {
+	font-size: 1.15rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.btn-modal-close {
+	background: none;
+	border: none;
+	font-size: 1.25rem;
+	color: #64748b;
+	cursor: pointer;
+}
+
+.modal-form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.form-group label {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #475569;
+	text-transform: uppercase;
+}
+
+.form-input {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 0.85rem;
+	color: #1e293b;
+	outline: none;
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 12px;
+	border-top: 1px solid #f1f5f9;
+	padding-top: 14px;
+}
+
+@media (max-width: 1024px) {
+	.challenge-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 760px) {
+	.challenges-stats-row {
+		grid-template-columns: 1fr;
+	}
+
+	.challenge-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.challenge-toolbar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.challenge-search-group {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.challenge-search-input {
+		width: 100%;
+	}
+}

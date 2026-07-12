@@ -1,0 +1,373 @@
+/* Leaderboard dashboard stylesheet */
+.lead-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Interval & Segment Bar */
+.lead-control-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.lead-intervals {
+	display: flex;
+	background: #f1f5f9;
+	border-radius: 8px;
+	padding: 2px;
+	gap: 2px;
+}
+
+.lead-interval-btn {
+	background: transparent;
+	border: none;
+	border-radius: 6px;
+	padding: 6px 12px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #475569;
+	cursor: pointer;
+}
+
+.lead-interval-btn-active {
+	background: #ffffff;
+	color: #0f172a;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.lead-segments {
+	display: flex;
+	gap: 16px;
+}
+
+.lead-segment-btn {
+	background: transparent;
+	border: none;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #64748b;
+	cursor: pointer;
+	padding-bottom: 4px;
+	position: relative;
+}
+
+.lead-segment-btn-active {
+	color: #059669;
+}
+
+.lead-segment-btn-active::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -4px;
+	height: 2px;
+	background: #059669;
+}
+
+/* 2. Main Two-Column Layout */
+.lead-workspace {
+	display: grid;
+	grid-template-columns: 6.5fr 3.5fr;
+	gap: 20px;
+}
+
+/* Left Column: Top Performer Standings Board */
+.lead-left-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+/* Top Tier Pedestal Display */
+.lead-pedestal-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.lead-pedestal-title {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.pedestal-display-row {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	gap: 24px;
+	padding: 10px 0;
+	flex-wrap: wrap;
+}
+
+.pedestal-podium {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	text-align: center;
+}
+
+.podium-first {
+	order: 2;
+}
+
+.podium-second {
+	order: 1;
+}
+
+.podium-third {
+	order: 3;
+}
+
+.pedestal-avatar-container {
+	position: relative;
+	margin-bottom: 8px;
+}
+
+.pedestal-avatar {
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3.5px solid #ffffff;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.avatar-first { width: 72px; height: 72px; border-color: #fbbf24; }
+.avatar-second { width: 60px; height: 60px; border-color: #cbd5e1; }
+.avatar-third { width: 56px; height: 56px; border-color: #b45309; }
+
+.pedestal-medal {
+	position: absolute;
+	bottom: -4px;
+	right: -4px;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	font-size: 0.78rem;
+	font-weight: 800;
+	color: #ffffff;
+}
+
+.medal-first { background: #fbbf24; }
+.medal-second { background: #cbd5e1; color: #334155; }
+.medal-third { background: #b45309; }
+
+.pedestal-name {
+	font-weight: 700;
+	color: #0f172a;
+	font-size: 0.88rem;
+}
+
+.pedestal-dept {
+	font-size: 0.68rem;
+	color: #64748b;
+}
+
+.pedestal-xp {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #059669;
+	margin-top: 4px;
+}
+
+/* Rank Extension Table */
+.lead-table-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	overflow: hidden;
+}
+
+.lead-table-wrapper {
+	overflow-x: auto;
+}
+
+.lead-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	font-size: 0.85rem;
+}
+
+.lead-table th {
+	background: #f8fafc;
+	border-bottom: 1px solid #cbd5e1;
+	padding: 12px 16px;
+	font-weight: 700;
+	color: #475569;
+	text-transform: uppercase;
+	font-size: 0.68rem;
+}
+
+.lead-table td {
+	border-bottom: 1px solid #f1f5f9;
+	padding: 12px 16px;
+	color: #334155;
+}
+
+.td-rank-num {
+	font-weight: 800;
+	color: #64748b;
+}
+
+.td-badges-row {
+	display: flex;
+	gap: 4px;
+}
+
+.td-badge-icon {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #cbd5e1;
+	display: grid;
+	place-items: center;
+	font-size: 0.62rem;
+	color: #ffffff;
+}
+
+.rank-trend-up { color: #059669; font-weight: 700; }
+.rank-trend-down { color: #ef4444; font-weight: 700; }
+.rank-trend-steady { color: #94a3b8; }
+
+/* Right Column: Gamification Analytics Panel */
+.lead-right-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.lead-chart-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.lead-chart-card h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.lead-chart-card p {
+	font-size: 0.78rem;
+	color: #64748b;
+	margin: 2px 0 0 0;
+}
+
+.lead-bar-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.lead-bar-row {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.lead-bar-meta {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #334155;
+}
+
+.lead-bar-track {
+	height: 10px;
+	background: #f1f5f9;
+	border-radius: 99px;
+	overflow: hidden;
+}
+
+.lead-bar-fill {
+	height: 100%;
+	background: #059669;
+	border-radius: 99px;
+}
+
+/* Recent Achievements Stream */
+.achievements-timeline {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-top: 6px;
+}
+
+.achievement-timeline-item {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+}
+
+.achievement-timeline-icon {
+	font-size: 1.15rem;
+	margin-top: 2px;
+}
+
+.achievement-timeline-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	font-size: 0.78rem;
+	line-height: 1.4;
+	color: #475569;
+}
+
+.achievement-timeline-details strong {
+	color: #0f172a;
+}
+
+.achievement-timeline-time {
+	font-size: 0.68rem;
+	color: #94a3b8;
+}
+
+@media (max-width: 1024px) {
+	.lead-workspace {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.lead-control-bar {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.lead-intervals {
+		justify-content: center;
+	}
+
+	.lead-segments {
+		justify-content: center;
+	}
+}
