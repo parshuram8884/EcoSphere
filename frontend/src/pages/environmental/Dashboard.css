@@ -1,0 +1,426 @@
+/* Environmental Dashboard Grid */
+.env-dashboard-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	font-family: 'Inter', sans-serif;
+}
+
+/* 1. Top Highlight Card */
+.env-health-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 24px;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 24px;
+	align-items: center;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.env-health-gauge {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background: conic-gradient(#059669 0% 78%, #e2e8f0 78% 100%);
+	display: grid;
+	place-items: center;
+	position: relative;
+}
+
+.env-health-gauge::before {
+	content: '';
+	position: absolute;
+	inset: 8px;
+	background: #ffffff;
+	border-radius: 50%;
+}
+
+.env-health-gauge-text {
+	position: relative;
+	text-align: center;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.env-health-gauge-text strong {
+	display: block;
+	font-size: 1.4rem;
+	line-height: 1;
+}
+
+.env-health-gauge-text span {
+	font-size: 0.68rem;
+	color: #64748b;
+}
+
+.env-health-info {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.env-health-info h2 {
+	font-size: 1.5rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.env-health-meta {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.env-badge-progress {
+	background: #ecfdf5;
+	color: #047857;
+	font-size: 0.72rem;
+	font-weight: 700;
+	padding: 4px 10px;
+	border-radius: 99px;
+}
+
+.env-badge-mom {
+	font-size: 0.78rem;
+	color: #059669;
+	font-weight: 600;
+}
+
+.env-health-actions {
+	display: flex;
+	gap: 12px;
+}
+
+.env-btn-primary {
+	background: #064e3b;
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 18px;
+	font-weight: 600;
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.env-btn-primary:hover {
+	background: #065f46;
+}
+
+.env-btn-secondary {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	color: #334155;
+	border-radius: 8px;
+	padding: 10px 18px;
+	font-weight: 600;
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.env-btn-secondary:hover {
+	background: #f8fafc;
+}
+
+/* 2. Three Metric Cards Row */
+.env-metrics-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.env-metric-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.env-card-header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.env-metric-label {
+	font-size: 0.68rem;
+	font-weight: 700;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.env-metric-icon {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #f1f5f9;
+	display: grid;
+	place-items: center;
+	font-size: 0.78rem;
+}
+
+.env-metric-val {
+	font-size: 1.6rem;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.env-metric-delta {
+	font-size: 0.78rem;
+	font-weight: 600;
+}
+
+.env-delta-down {
+	color: #059669;
+}
+
+.env-delta-up {
+	color: #ef4444;
+}
+
+.env-delta-info {
+	color: #64748b;
+}
+
+/* 3. Middle-Lower Charts Grid */
+.env-charts-row {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 20px;
+}
+
+.env-chart-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.env-chart-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.env-chart-header h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+}
+
+.env-chart-legends {
+	display: flex;
+	gap: 16px;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: #64748b;
+}
+
+.env-legend-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.legend-dot-scope1 { width: 8px; height: 8px; border-radius: 50%; background: #064e3b; }
+.legend-dot-scope2 { width: 8px; height: 8px; border-radius: 50%; background: #10b981; }
+.legend-dot-scope3 { width: 8px; height: 8px; border-radius: 50%; background: #a7f3d0; }
+
+.env-svg-chart-container {
+	height: 180px;
+	position: relative;
+}
+
+.env-chart-axis-x {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	font-size: 0.64rem;
+	color: #64748b;
+	text-align: center;
+	margin-top: 8px;
+}
+
+/* Donut Chart Mixer Layout */
+.env-donut-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.env-donut-chart {
+	width: 120px;
+	height: 120px;
+	position: relative;
+}
+
+.env-donut-legends-list {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.env-donut-legend-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: #475569;
+}
+
+.env-donut-dot-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+/* 4. Bottom Grid Layout */
+.env-bottom-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.env-breakdown-list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.env-breakdown-row {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.env-breakdown-meta {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #334155;
+}
+
+.env-breakdown-track {
+	height: 8px;
+	background: #f1f5f9;
+	border-radius: 99px;
+	overflow: hidden;
+}
+
+.env-breakdown-fill {
+	height: 100%;
+	background: #047857;
+	border-radius: 99px;
+}
+
+.env-cap-indicator-line {
+	stroke: #ef4444;
+	stroke-dasharray: 4,4;
+	stroke-width: 1.5;
+}
+
+.env-cap-label {
+	fill: #ef4444;
+	font-size: 8px;
+	font-weight: 700;
+}
+
+/* 5. Bottom strategic goals */
+.env-goals-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.env-goals-card h3 {
+	font-size: 1.05rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.env-goals-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.env-goal-item {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.env-goal-label-pct {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.env-goal-subtext {
+	font-size: 0.72rem;
+	color: #64748b;
+	margin-top: 2px;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+	.env-charts-row {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 760px) {
+	.env-health-card {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		text-align: center;
+	}
+
+	.env-health-actions {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.env-metrics-row {
+		grid-template-columns: 1fr;
+	}
+
+	.env-bottom-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.env-goals-row {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+}
