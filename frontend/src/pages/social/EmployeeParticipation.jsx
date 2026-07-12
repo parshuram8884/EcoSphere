@@ -60,6 +60,26 @@ export default function EmployeeParticipation() {
 
   const pendingCount = participations.filter((p) => p.approval_status === 'pending').length
 
+  // Update participation status (approve / reject / flag)
+  const [actionLoading, setActionLoading] = useState(false)
+
+  const updateStatus = async (id, newStatus) => {
+    setActionLoading(true)
+    try {
+      const res = await authFetch(`/social/participations/${id}/`, {
+        method: 'PATCH',
+        body: JSON.stringify({ approval_status: newStatus }),
+      })
+      if (res.ok) {
+        fetchData()
+      }
+    } catch (err) {
+      console.error('Failed to update status:', err)
+    } finally {
+      setActionLoading(false)
+    }
+  }
+
   // Handle form field changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -278,14 +298,29 @@ export default function EmployeeParticipation() {
               )}
 
               <div className="participation-details-actions">
-                <button type="button" className="participation-btn-reject" disabled>
+                <button
+                  type="button"
+                  className="participation-btn-reject"
+                  disabled={activeParticipation.approval_status !== 'pending' || actionLoading}
+                  onClick={() => updateStatus(activeParticipation.id, 'rejected')}
+                >
                   Reject Submission
                 </button>
-                <button type="button" className="participation-btn-flag" disabled>
+                <button
+                  type="button"
+                  className="participation-btn-flag"
+                  disabled={activeParticipation.approval_status !== 'pending' || actionLoading}
+                  onClick={() => updateStatus(activeParticipation.id, 'rejected')}
+                >
                   Flag for Inquiry
                 </button>
-                <button type="button" className="participation-btn-approve" disabled>
-                  ✓ Approve & Award Points
+                <button
+                  type="button"
+                  className="participation-btn-approve"
+                  disabled={activeParticipation.approval_status !== 'pending' || actionLoading}
+                  onClick={() => updateStatus(activeParticipation.id, 'approved')}
+                >
+                  {actionLoading ? 'Processing...' : '✓ Approve & Award Points'}
                 </button>
               </div>
             </>

@@ -1,18 +1,45 @@
 import { useState } from 'react'
+import { authFetch } from '../../services/api'
 import './ChallengeParticipation.css'
 
 export default function ChallengeParticipation() {
   const [activeTab, setActiveTab] = useState('Awaiting Review')
   const [activeSubId, setActiveSubId] = useState('Sarah Jenkins')
+  const [actionLoading, setActionLoading] = useState(false)
 
   const submissions = [
-    { id: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&fit=crop&q=80', dept: 'ENGINEERING TEAM', title: '30-Day Zero Plastic Sprint', streak: '5/5 Tasks Done', xp: '+500 XP', performance: '1,420 XP total', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&fit=crop&q=80', receiptName: 'zero_plastic_receipt.pdf', receiptSize: '142 KB' },
-    { id: 'Marcus Thorne', avatar: '', dept: 'OPERATIONS TEAM', title: 'Carpool Synergy Week', streak: '4/7 Tasks Done', xp: '+150 XP', performance: '820 XP total', image: '', receiptName: 'carpool_log.pdf', receiptSize: '88 KB' },
-    { id: 'Elena Rodriguez', avatar: '', dept: 'R&D TEAM', title: '30-Day Zero Plastic Sprint', streak: '3/5 Tasks Done', xp: '+500 XP', performance: '1,200 XP total', image: '', receiptName: 'plastic_audit.pdf', receiptSize: '112 KB' },
-    { id: 'Kevin Zhang', avatar: '', dept: 'FINANCE TEAM', title: 'Green Travel Commute', streak: '5/5 Tasks Done', xp: '+300 XP', performance: '950 XP total', image: '', receiptName: 'commute_receipt.pdf', receiptSize: '94 KB' }
+    { id: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&fit=crop&q=80', dept: 'ENGINEERING TEAM', title: '30-Day Zero Plastic Sprint', streak: '5/5 Tasks Done', xp: '+500 XP', performance: '1,420 XP total', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&fit=crop&q=80', receiptName: 'zero_plastic_receipt.pdf', receiptSize: '142 KB', status: 'pending' },
+    { id: 'Marcus Thorne', avatar: '', dept: 'OPERATIONS TEAM', title: 'Carpool Synergy Week', streak: '4/7 Tasks Done', xp: '+150 XP', performance: '820 XP total', image: '', receiptName: 'carpool_log.pdf', receiptSize: '88 KB', status: 'pending' },
+    { id: 'Elena Rodriguez', avatar: '', dept: 'R&D TEAM', title: '30-Day Zero Plastic Sprint', streak: '3/5 Tasks Done', xp: '+500 XP', performance: '1,200 XP total', image: '', receiptName: 'plastic_audit.pdf', receiptSize: '112 KB', status: 'pending' },
+    { id: 'Kevin Zhang', avatar: '', dept: 'FINANCE TEAM', title: 'Green Travel Commute', streak: '5/5 Tasks Done', xp: '+300 XP', performance: '950 XP total', image: '', receiptName: 'commute_receipt.pdf', receiptSize: '94 KB', status: 'pending' }
   ]
 
-  const activeSub = submissions.find(s => s.id === activeSubId) || submissions[0]
+  const [submissionsList, setSubmissionsList] = useState(submissions)
+
+  const activeSub = submissionsList.find(s => s.id === activeSubId) || submissionsList[0]
+
+  // Update submission status
+  const updateStatus = async (subId, newStatus) => {
+    setActionLoading(true)
+    // Simulate API call — in production this would PATCH /api/gamification/participations/:id/
+    // For now update local state to keep UI responsive
+    setTimeout(() => {
+      setSubmissionsList(prev =>
+        prev.map(s => s.id === subId ? { ...s, status: newStatus } : s)
+      )
+      setActionLoading(false)
+    }, 300)
+  }
+
+  const pendingCount = submissionsList.filter(s => s.status === 'pending').length
+
+  // Filter by tab
+  const filteredSubmissions = submissionsList.filter(s => {
+    if (activeTab === 'Awaiting Review') return s.status === 'pending'
+    if (activeTab === 'Approved Logs') return s.status === 'approved'
+    if (activeTab === 'Rejected Evidence') return s.status === 'rejected'
+    return true
+  })
 
   return (
     <div className="chal-part-container">
@@ -28,7 +55,7 @@ export default function ChallengeParticipation() {
           className={`chal-part-tab-link ${activeTab === 'Awaiting Review' ? 'chal-part-tab-link-active' : ''}`}
           onClick={() => setActiveTab('Awaiting Review')}
         >
-          Awaiting Review <span className="chal-part-tab-badge">14</span>
+          Awaiting Review {pendingCount > 0 && <span className="chal-part-tab-badge">{pendingCount}</span>}
         </div>
         <div 
           className={`chal-part-tab-link ${activeTab === 'Approved Logs' ? 'chal-part-tab-link-active' : ''}`}
@@ -51,11 +78,11 @@ export default function ChallengeParticipation() {
         <div className="chal-part-left-card">
           <div className="chal-part-left-header">
             <span>EVIDENCE SUBMISSIONS LIST</span>
-            <span>4 Awaiting</span>
+            <span>{pendingCount} Awaiting</span>
           </div>
 
           <div className="chal-part-feed-list">
-            {submissions.map((sub) => (
+            {filteredSubmissions.map((sub) => (
               <div 
                 key={sub.id}
                 className={`chal-part-feed-item ${activeSubId === sub.id ? 'chal-part-feed-item-active' : ''}`}
@@ -122,11 +149,21 @@ export default function ChallengeParticipation() {
 
           {/* Actionable Toggle Mechanics */}
           <div className="chal-part-actions">
-            <button type="button" className="chal-part-btn-reject">
+            <button
+              type="button"
+              className="chal-part-btn-reject"
+              disabled={activeSub.status !== 'pending' || actionLoading}
+              onClick={() => updateStatus(activeSub.id, 'rejected')}
+            >
               Reject Claims / Request Clarification
             </button>
-            <button type="button" className="chal-part-btn-approve">
-              ✓ Approve & Disburse {activeSub.xp.replace('+', '')}
+            <button
+              type="button"
+              className="chal-part-btn-approve"
+              disabled={activeSub.status !== 'pending' || actionLoading}
+              onClick={() => updateStatus(activeSub.id, 'approved')}
+            >
+              {actionLoading ? 'Processing...' : `✓ Approve & Disburse ${activeSub.xp.replace('+', '')}`}
             </button>
           </div>
         </div>
@@ -155,9 +192,13 @@ export default function ChallengeParticipation() {
               <span className="chal-part-timeline-node-date">Oct 12, 2024</span>
             </div>
             <div className="chal-part-timeline-node">
-              <div className="chal-part-timeline-node-dot chal-part-node-dot-active"></div>
+              <div className={`chal-part-timeline-node-dot ${activeSub.status === 'approved' ? 'chal-part-node-dot-done' : activeSub.status === 'rejected' ? 'chal-part-node-dot-pending' : 'chal-part-node-dot-active'}`}></div>
               <span className="chal-part-timeline-node-title">Verification Audit</span>
-              <span className="chal-part-timeline-node-date">In Progress</span>
+              <span className="chal-part-timeline-node-date">
+                {activeSub.status === 'approved' ? 'Approved' :
+                 activeSub.status === 'rejected' ? 'Rejected' :
+                 'In Progress'}
+              </span>
             </div>
           </div>
         </div>

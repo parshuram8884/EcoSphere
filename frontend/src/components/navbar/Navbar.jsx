@@ -1,7 +1,15 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 export default function Navbar({ onLinkClick }) {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/auth/login')
+  }
 
   const getSidebarClass = (path) => {
     return location.pathname.startsWith(path) ? 'layout-side-link layout-side-link-active' : 'layout-side-link'
@@ -96,7 +104,16 @@ export default function Navbar({ onLinkClick }) {
         </svg>
         Setting
       </Link>
-    
+
+      {/* Divider */}
+      <div className="layout-nav-divider"></div>
+
+      <button type="button" className="layout-side-link layout-logout-btn" onClick={handleLogout}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight: 4}}>
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+        Logout
+      </button>
     </nav>
   )
 }
