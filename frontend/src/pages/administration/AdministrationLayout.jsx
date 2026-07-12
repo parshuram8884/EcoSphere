@@ -19,7 +19,7 @@ export default function AdministrationLayout() {
     role: authUser?.role || 'Employee',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
     goalPct: 100,
-    goalText: 'System Uptime'
+    goalText: 'System Uptime  '
   }
 
   return (

@@ -18,7 +18,7 @@ export default function GamificationLayout() {
     role: authUser?.role || 'Employee',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&fit=crop&q=80',
     goalPct: 78,
-    goalText: 'of Net Zero Target'
+    goalText: 'of Net Zero Target reached'
   }
 
   return (
